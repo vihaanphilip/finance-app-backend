@@ -14,7 +14,7 @@ function HomePage() {
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: "center", 
-      minHeight: "100vh",
+      minHeight: "calc(100vh - 80px)", // Subtract header height
       padding: "20px"
     }}>
       <h1 style={{ marginBottom: "30px", fontSize: "2.5em" }}>
