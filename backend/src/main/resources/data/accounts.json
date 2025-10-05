@@ -1,0 +1,14 @@
+{
+  "accounts": [
+    {
+      "name": "Maybank",
+      "description": "The primary hub for all daily and transactional finances.",
+      "accountTypeId": 1
+    },
+    {
+      "name": "HSBC",
+      "description": "The designated vault for wealth accumulation, financial goals, and emergency funds.",
+      "accountTypeId": 3
+    }
+  ]
+}

@@ -2,9 +2,10 @@ package com.vphilip.finance.app.account.model;
 
 import org.springframework.data.annotation.Id;
 
-public record Account (
+public record Account(
     @Id
     Long id,
-    String accountName,
+    String name,
+    String description,
     Long accountTypeId
 ) {}
