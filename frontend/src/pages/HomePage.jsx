@@ -48,7 +48,7 @@ function HomePage() {
           style={{
             padding: "15px 30px",
             fontSize: "1.2em",
-            backgroundColor: "#28a745",
+            backgroundColor: "#dc3545",
             color: "white",
             border: "none",
             borderRadius: "8px",
@@ -56,8 +56,8 @@ function HomePage() {
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             transition: "background-color 0.3s ease"
           }}
-          onMouseOver={(e) => e.target.style.backgroundColor = "#1e7e34"}
-          onMouseOut={(e) => e.target.style.backgroundColor = "#28a745"}
+          onMouseOver={(e) => e.target.style.backgroundColor = "#b02a37"}
+          onMouseOut={(e) => e.target.style.backgroundColor = "#dc3545"}
         >
           View Accounts
         </button>

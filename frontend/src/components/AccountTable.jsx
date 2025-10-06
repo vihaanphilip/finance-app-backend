@@ -17,8 +17,8 @@ function AccountTable({ accounts }) {
       title: "Description",
     },
     {
-      key: "account_type_id",
-      title: "Account Type ID",
+      key: "account_type_label",
+      title: "Account Type",
     },
   ];
 

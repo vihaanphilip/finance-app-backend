@@ -1,6 +1,7 @@
 package com.vphilip.finance.app.account.controller;
 
 import com.vphilip.finance.app.account.model.Account;
+import com.vphilip.finance.app.account.model.AccountDTO;
 import com.vphilip.finance.app.account.repository.AccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class AccountController {
     }
 
     @GetMapping("")
-    List<Account> getAccounts() {
-        return accountRepository.findAll();
+    List<AccountDTO> getAccounts() {
+        return accountRepository.findAllWithType();
     }
 
     @GetMapping("/{id}")
