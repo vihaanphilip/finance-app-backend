@@ -7,5 +7,5 @@ public record Account(
     Long id,
     String name,
     String description,
-    Long accountTypeId
+    Long account_type_id
 ) {}

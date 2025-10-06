@@ -13,7 +13,6 @@ function AccountTypePage() {
 
   return (
     <div>
-      <h1 style={{ marginLeft: "20px" }}>Account Types</h1>
       <AccountTypeTable accountTypes={accountTypes} />
     </div>
   );
