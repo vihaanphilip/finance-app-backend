@@ -39,4 +39,13 @@ public class AccountController {
     void createAccount(@RequestBody Account account) {
         accountRepository.save(account);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    Account deleteAccount(@PathVariable Integer id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        accountRepository.deleteById(id);
+        return account;
+    }
 }

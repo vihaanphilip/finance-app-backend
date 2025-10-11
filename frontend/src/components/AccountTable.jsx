@@ -23,11 +23,11 @@ function AccountTable({ accounts }) {
   ];
 
   return (
-    <DataTable 
-      data={accounts} 
-      columns={columns} 
+    <DataTable
+      data={accounts}
+      columns={columns}
       keyField="id"
-      title="Accounts"
+      // title="Accounts"
     />
   );
 }
