@@ -17,6 +17,11 @@ function HomePage() {
     navigate("/earningtypes");
   };
 
+  // Handler to navigate to Earning Categories page
+  const handleGoToEarningCategories = () => {
+    navigate("/earningcategories");
+  };
+
   return (
     <div
       style={{
@@ -31,7 +36,14 @@ function HomePage() {
       <h1 style={{ marginBottom: "30px", fontSize: "2.5em" }}>
         Welcome to Finance App
       </h1>
-      <div style={{ display: "flex", gap: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
         <button
           onClick={handleGoToAccountTypes}
           style={{
@@ -86,6 +98,25 @@ function HomePage() {
           onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
         >
           View Earning Types
+        </button>
+        {/* Button to navigate to Earning Categories page */}
+        <button
+          onClick={handleGoToEarningCategories}
+          style={{
+            padding: "15px 30px",
+            fontSize: "1.2em",
+            backgroundColor: "#ffc107", // Yellow/amber color for distinction
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#e0a800")} // Darker amber on hover
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#ffc107")}
+        >
+          View Earning Categories
         </button>
       </div>
     </div>

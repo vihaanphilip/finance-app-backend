@@ -38,17 +38,12 @@ public class EarningCategoryBootstrap implements CommandLineRunner {
         log.info("EarningCategoryBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/earning_categories.json")) {
             EarningCategories allEarningCategories = objectMapper.readValue(inputStream, EarningCategories.class);
-            log.info("Reading {} earning categories from JSON data and saving to in-memory collection.", allEarningCategories.earningCategories().size());
+            log.info("Reading {} earning categories from JSON data and saving to database.", allEarningCategories.earningCategories().size());
             for (EarningCategory earningCategory : allEarningCategories.earningCategories()) {
-                log.info("Processing earning category: id={}, label={}, description={}, earning_type_id={}",
-                        earningCategory.getId(), earningCategory.getLabel(), earningCategory.getDescription(), earningCategory.getEarningTypeId());
-                if (!earningCategoryRepository.existsById(earningCategory.getId())) {
-                    earningCategoryRepository.insert(earningCategory);
-                    log.info("Inserted earning category with id {}", earningCategory.getId());
-                } else {
-                    earningCategoryRepository.save(earningCategory);
-                    log.info("Updated earning category with id {}", earningCategory.getId());
-                }
+                log.info("Processing earning category: label={}, description={}, earning_type_id={}",
+                        earningCategory.getLabel(), earningCategory.getDescription(), earningCategory.getEarningTypeId());
+                earningCategoryRepository.save(earningCategory);
+                log.info("Saved earning category: {}", earningCategory.getLabel());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);

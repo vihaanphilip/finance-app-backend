@@ -4,7 +4,8 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import AccountTypePage from "./pages/AccountTypePage";
 import AccountPage from "./pages/AccountPage";
-import EarningTypePage from "./pages/EarningTypePage"; // ✅ Import the new page
+import EarningTypePage from "./pages/EarningTypePage";
+import EarningCategoryPage from "./pages/EarningCategoryPage"; // ✅ Added import
 
 function App() {
   return (
@@ -15,6 +16,11 @@ function App() {
           <Route path="/accounttypes" element={<AccountTypePage />} />
           <Route path="/accounts" element={<AccountPage />} />
           <Route path="/earningtypes" element={<EarningTypePage />} />
+          <Route
+            path="/earningcategories"
+            element={<EarningCategoryPage />}
+          />{" "}
+          {/* ✅ Added route */}
         </Routes>
       </Layout>
     </Router>

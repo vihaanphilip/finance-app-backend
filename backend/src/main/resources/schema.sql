@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS earning_type (
 
 ---- 12/10/2025 - Adding earning_category table
 CREATE TABLE IF NOT EXISTS earning_category (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     label VARCHAR(500) NOT NULL,
     description VARCHAR(2000) NOT NULL,
     earning_type_id BIGINT NOT NULL
