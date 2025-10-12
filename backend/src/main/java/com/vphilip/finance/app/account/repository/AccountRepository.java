@@ -12,6 +12,7 @@ public interface AccountRepository extends ListCrudRepository<Account, Integer> 
         SELECT a.id, a.name, a.description, a.account_type_id, at.label as account_type_label
         FROM account a
         LEFT JOIN account_type at ON a.account_type_id = at.id
+        ORDER BY a.id
     """)
     List<AccountDTO> findAllWithType();
 }

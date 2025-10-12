@@ -13,7 +13,7 @@ function EarningCategoryTable({ earningCategories }) {
       data={earningCategories}
       columns={columns}
       keyField="id"
-      title="Earning Categories"
+      // title="Earning Categories"
     />
   );
 }

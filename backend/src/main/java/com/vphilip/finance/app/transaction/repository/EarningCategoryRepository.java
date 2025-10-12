@@ -15,6 +15,7 @@ public interface EarningCategoryRepository extends ListCrudRepository<EarningCat
         SELECT ec.id, ec.earning_type_id, ec.label, ec.description, et.label as earning_type_label
         FROM earning_category ec
         LEFT JOIN earning_type et ON ec.earning_type_id = et.id
+        ORDER BY ec.id
     """)
     List<EarningCategoryDTO> findAllWithType();
 
