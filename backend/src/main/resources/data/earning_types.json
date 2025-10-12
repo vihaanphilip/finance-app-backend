@@ -1,0 +1,15 @@
+{
+  "earning_types": [
+    {
+      "id": 1,
+      "label": "Salary",
+      "description": "Regular income from employment or work contracts"
+    },
+    {
+      "id": 2,
+      "label": "Investment",
+      "description": "Income from stocks, bonds, dividends, or other investment returns"
+    }
+  ]
+}
+

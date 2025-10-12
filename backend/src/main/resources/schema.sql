@@ -29,3 +29,11 @@ CREATE TABLE IF NOT EXISTS account (
     description VARCHAR(2000) NOT NULL,
     account_type_id BIGINT NOT NULL
 );
+
+-- 12/10/2025 - Adding earning_type table
+
+CREATE TABLE IF NOT EXISTS earning_type (
+    id BIGINT PRIMARY KEY,
+    label VARCHAR(500) NOT NULL,
+    description VARCHAR(2000) NOT NULL
+);

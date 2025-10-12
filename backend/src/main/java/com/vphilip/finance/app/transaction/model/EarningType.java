@@ -1,8 +1,8 @@
-package com.vphilip.finance.app.account.model;
+package com.vphilip.finance.app.transaction.model;
 
 import org.springframework.data.annotation.Id;
 
-public record AccountType (
+public record EarningType(
     @Id
     Long id,
     String label,

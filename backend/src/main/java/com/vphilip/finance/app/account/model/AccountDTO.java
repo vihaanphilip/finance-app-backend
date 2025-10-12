@@ -1,9 +1,9 @@
 package com.vphilip.finance.app.account.model;
 
 public record AccountDTO(
-    Integer id,
+    Long id,
     String name,
     String description,
-    Integer account_type_id,
+    Long account_type_id,
     String account_type_label
 ) {}

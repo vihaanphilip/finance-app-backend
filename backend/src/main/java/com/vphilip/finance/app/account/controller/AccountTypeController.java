@@ -25,7 +25,7 @@ public class AccountTypeController {
     }
 
     @GetMapping("/{id}")
-    AccountType getAccountTypeById(@PathVariable Integer id) {
+    AccountType getAccountTypeById(@PathVariable Long id) {
         Optional<AccountType> AccountType = accountTypeRepository.findById(id);
         if (AccountType.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
