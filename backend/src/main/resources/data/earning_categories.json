@@ -1,0 +1,22 @@
+{
+  "earning_categories": [
+    {
+      "id": 1,
+      "label": "Monthly Paycheck",
+      "description": "Regular income received from an employer on a monthly basis",
+      "earning_type_id": 1
+    },
+    {
+      "id": 2,
+      "label": "Claims",
+      "description": "Compensation received from insurance claims or legal settlements",
+      "earning_type_id": 1
+    },
+    {
+      "id": 3,
+      "label": "Dividends",
+      "description": "Earnings distributed to shareholders from a corporation's profits",
+      "earning_type_id": 2
+    }
+  ]
+}
