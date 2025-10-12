@@ -6,6 +6,7 @@ function EarningCategoryTable({ earningCategories }) {
     { key: "id", title: "ID" },
     { key: "label", title: "Label", highlight: true },
     { key: "description", title: "Description" },
+    { key: "earning_type_label", title: "Earning Type" },
   ];
 
   return (
