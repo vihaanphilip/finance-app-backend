@@ -1,7 +1,8 @@
 import React from "react";
 import DataTable from "./DataTable";
+import { FaTrash } from "react-icons/fa";
 
-function EarningTable({ earnings }) {
+function EarningTable({ earnings, onDelete }) {
   const columns = [
     {
       key: "id",
@@ -50,6 +51,24 @@ function EarningTable({ earnings }) {
         });
         return `${dayName}, ${formattedDate}`;
       },
+    },
+    {
+      key: "actions",
+      title: "",
+      render: (_, row) => (
+        <button
+          onClick={() => onDelete(row.id)}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#dc3545",
+            cursor: "pointer",
+            padding: "5px",
+          }}
+        >
+          <FaTrash />
+        </button>
+      ),
     },
   ];
 

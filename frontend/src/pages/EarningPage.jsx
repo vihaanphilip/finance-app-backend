@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getEarnings, createEarning } from "../api/EarningApi";
+import { getEarnings, createEarning, deleteEarning } from "../api/EarningApi";
 import EarningTable from "../components/EarningTable";
 import AddEarningModal from "../components/AddEarningModal";
 
@@ -17,24 +17,23 @@ function EarningPage() {
     try {
       await createEarning(earningData);
       loadEarnings();
-      toast.success("Earning added successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.success("Earning added successfully!");
     } catch (error) {
       console.error("Error adding earning:", error);
-      toast.error("Failed to add earning. Please try again.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error("Error adding earning. Please try again.");
+    }
+  };
+
+  const handleDeleteEarning = async (id) => {
+    if (window.confirm("Are you sure you want to delete this earning?")) {
+      try {
+        await deleteEarning(id);
+        loadEarnings();
+        toast.success("Earning deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting earning:", error);
+        toast.error("Error deleting earning. Please try again.");
+      }
     }
   };
 
@@ -76,7 +75,7 @@ function EarningPage() {
           Create Earning
         </button>
       </div>
-      <EarningTable earnings={earnings} />
+      <EarningTable earnings={earnings} onDelete={handleDeleteEarning} />
       <AddEarningModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
