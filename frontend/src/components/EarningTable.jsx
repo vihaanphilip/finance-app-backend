@@ -22,6 +22,10 @@ function EarningTable({ earnings }) {
       title: "Description",
     },
     {
+      key: "account_label",
+      title: "Account",
+    },
+    {
       key: "earning_category_label",
       title: "Category",
     },

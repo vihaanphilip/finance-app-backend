@@ -44,9 +44,11 @@ public class EarningController {
         earningRepository.save(earning);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public Earning delete(@PathVariable Long id) {
+        Earning earning = earningRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found"));
         earningRepository.deleteById(id);
+        return earning;
     }
 }

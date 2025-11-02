@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public record EarningDTO(
     Long id,
     Long account_id,
+    String account_label,
     String description,
     BigDecimal amount,
     Long earning_type_id,
