@@ -2,35 +2,35 @@
   "earnings": [
     {
       "description": "Monthly Salary",
-      "amount": 5000.00,
+      "amount": 5000.50,
       "earning_type_id": 1,
       "earning_category_id": 1,
       "account_id": 1
     },
     {
       "description": "Freelance Web Development",
-      "amount": 1500.00,
+      "amount": 1500.70,
       "earning_type_id": 2,
       "earning_category_id": 2,
       "account_id": 1
     },
     {
       "description": "Stock Dividends",
-      "amount": 300.00,
+      "amount": 300.80,
       "earning_type_id": 2,
       "earning_category_id": 3,
       "account_id": 1
     },
     {
       "description": "Consulting Fee",
-      "amount": 2000.00,
+      "amount": 2000.15,
       "earning_type_id": 2,
       "earning_category_id": 2,
       "account_id": 2
     },
     {
       "description": "Rental Income",
-      "amount": 1200.00,
+      "amount": 1200.01,
       "earning_type_id": 2,
       "earning_category_id": 3,
       "account_id": 2

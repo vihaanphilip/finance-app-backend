@@ -11,18 +11,22 @@ function EarningTable({ earnings }) {
       key: "amount",
       title: "Amount",
       highlight: true,
-      render: (value) => `RM ${Number(value).toFixed(2)}`,
+      render: (value) =>
+        `RM ${Number(value).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`,
     },
     {
       key: "description",
       title: "Description",
     },
     {
-      key: "earning_category_name",
+      key: "earning_category_label",
       title: "Category",
     },
     {
-      key: "earning_type_name",
+      key: "earning_type_label",
       title: "Type",
     },
     {

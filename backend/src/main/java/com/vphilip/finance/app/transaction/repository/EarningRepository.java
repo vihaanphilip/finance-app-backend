@@ -13,14 +13,15 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
 
     @Query("""
             SELECT e.id, 
-                   e.account_id as accountId, 
-                   e.description, e.amount,
-                   e.earning_type_id as earningTypeId, 
-                   et.label as earningTypeLabel,
-                   e.earning_category_id as earningCategoryId, 
-                   ec.label as earningCategoryLabel,
-                   e.created_at as createdAt, 
-                   e.last_modified_at as lastModifiedAt
+                   e.account_id, 
+                   e.description, 
+                   e.amount,
+                   e.earning_type_id, 
+                   et.label as earning_type_label,
+                   e.earning_category_id, 
+                   ec.label as earning_category_label,
+                   e.created_at, 
+                   e.last_modified_at
             FROM earning e
             LEFT JOIN earning_type et ON e.earning_type_id = et.id
             LEFT JOIN earning_category ec ON e.earning_category_id = ec.id
