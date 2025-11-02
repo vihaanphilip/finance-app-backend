@@ -40,15 +40,16 @@ function EarningTable({ earnings, onDelete }) {
       render: (value) => {
         const date = new Date(value);
         const dayName = date.toLocaleString("en-GB", { weekday: "long" });
-        const formattedDate = date.toLocaleString("en-GB", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
-        });
+        const formattedDate = date
+          .toLocaleString("en-US", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          })
+          .replace(/am|pm/i, (match) => match.toUpperCase());
         return `${dayName}, ${formattedDate}`;
       },
     },

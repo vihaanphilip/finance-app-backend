@@ -6,8 +6,16 @@ import { getEarningTypes } from "../api/EarningTypeApi";
 function AddEarningModal({ isOpen, onClose, onSubmit }) {
   const getLocalTimestamp = () => {
     const now = new Date();
-    const offset = now.getTimezoneOffset() * 60000; // Convert offset to milliseconds
-    return new Date(now.getTime() - offset).toISOString(); // Get local time in ISO format
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}:00.000Z`;
+  };
+
+  const formatForDateTimeLocal = (isoString) => {
+    return isoString.slice(0, 16);
   };
 
   const [formData, setFormData] = useState({
@@ -54,10 +62,20 @@ function AddEarningModal({ isOpen, onClose, onSubmit }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "created_at") {
+      // Store the exact string from the input with Z suffix to mark it as UTC
+      const isoString = `${value}:00.000Z`;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: isoString,
+        last_modified_at: isoString,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -135,6 +153,26 @@ function AddEarningModal({ isOpen, onClose, onSubmit }) {
                 border: "1px solid #ced4da",
                 boxSizing: "border-box",
                 minHeight: "100px",
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: "15px" }}>
+            <label style={{ display: "block", marginBottom: "5px" }}>
+              Transaction Date *
+            </label>
+            <input
+              type="datetime-local"
+              name="created_at"
+              value={formatForDateTimeLocal(formData.created_at)}
+              onChange={handleInputChange}
+              required
+              style={{
+                width: "100%",
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ced4da",
+                boxSizing: "border-box",
               }}
             />
           </div>
