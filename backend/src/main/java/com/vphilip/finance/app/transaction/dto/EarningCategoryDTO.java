@@ -1,4 +1,4 @@
-package com.vphilip.finance.app.transaction.model;
+package com.vphilip.finance.app.transaction.dto;
 
 public record EarningCategoryDTO(
         Long id,

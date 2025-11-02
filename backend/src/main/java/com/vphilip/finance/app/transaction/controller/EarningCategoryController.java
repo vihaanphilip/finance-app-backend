@@ -1,7 +1,7 @@
 package com.vphilip.finance.app.transaction.controller;
 
 import com.vphilip.finance.app.transaction.model.EarningCategory;
-import com.vphilip.finance.app.transaction.model.EarningCategoryDTO;
+import com.vphilip.finance.app.transaction.dto.EarningCategoryDTO;
 import com.vphilip.finance.app.transaction.repository.EarningCategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

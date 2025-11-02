@@ -1,5 +1,6 @@
 package com.vphilip.finance.app.transaction.controller;
 
+import com.vphilip.finance.app.transaction.dto.EarningDTO;
 import com.vphilip.finance.app.transaction.model.Earning;
 import com.vphilip.finance.app.transaction.repository.EarningRepository;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ public class EarningController {
     }
 
     @GetMapping
-    public List<Earning> findAll() {
-        return earningRepository.findAll();
+    public List<EarningDTO> findAll() {
+        return earningRepository.findAllWithLabels();
     }
 
     @GetMapping("/{id}")
