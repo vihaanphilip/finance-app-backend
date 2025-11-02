@@ -45,3 +45,18 @@ CREATE TABLE IF NOT EXISTS earning_category (
     description VARCHAR(2000) NOT NULL,
     earning_type_id BIGINT NOT NULL
 );
+
+-- 02/11/2025 - Adding earning table
+CREATE TABLE IF NOT EXISTS earning (
+    id BIGSERIAL PRIMARY KEY,
+    account_id BIGINT NOT NULL,
+    description VARCHAR(2000) NOT NULL,
+    amount DECIMAL(19,2) NOT NULL,
+    earning_type_id BIGINT NOT NULL,
+    earning_category_id BIGINT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    last_modified_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(id),
+    FOREIGN KEY (earning_type_id) REFERENCES earning_type(id),
+    FOREIGN KEY (earning_category_id) REFERENCES earning_category(id)
+);
