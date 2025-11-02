@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/earnings")
+@RequestMapping("/api/earnings")
 public class EarningController {
 
     private final EarningRepository earningRepository;
