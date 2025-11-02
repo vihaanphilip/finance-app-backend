@@ -22,6 +22,11 @@ function HomePage() {
     navigate("/earningcategories");
   };
 
+  // Handler to navigate to Earnings page
+  const handleGoToEarnings = () => {
+    navigate("/earnings");
+  };
+
   return (
     <div
       style={{
@@ -117,6 +122,25 @@ function HomePage() {
           onMouseOut={(e) => (e.target.style.backgroundColor = "#ffc107")}
         >
           View Earning Categories
+        </button>
+        {/* Button to navigate to Earnings page */}
+        <button
+          onClick={handleGoToEarnings}
+          style={{
+            padding: "15px 30px",
+            fontSize: "1.2em",
+            backgroundColor: "#6f42c1", // Purple color for distinction
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#563d7c")} // Darker purple on hover
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#6f42c1")}
+        >
+          View Earnings
         </button>
       </div>
     </div>
