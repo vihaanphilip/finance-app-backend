@@ -41,7 +41,7 @@ function EarningTable({ earnings, onDelete, onEdit }) {
         const date = new Date(value);
         const dayName = date.toLocaleString("en-GB", { weekday: "long" });
         const formattedDate = date
-          .toLocaleString("en-US", {
+          .toLocaleString("en-GB", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -50,7 +50,7 @@ function EarningTable({ earnings, onDelete, onEdit }) {
             hour12: true,
           })
           .replace(/am|pm/i, (match) => match.toUpperCase());
-        return `${dayName}, ${formattedDate}`;
+        return `${formattedDate}, ${dayName}`;
       },
     },
     {

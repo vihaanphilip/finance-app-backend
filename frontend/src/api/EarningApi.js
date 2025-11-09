@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config/api.js";
 
-const API_URL = `${config.API_BASE_URL}/api/earnings`;
+const API_URL = `${config.API_BASE_URL}/api/v1/earnings`;
 
 export const getEarnings = async () => {
   const response = await axios.get(API_URL);
