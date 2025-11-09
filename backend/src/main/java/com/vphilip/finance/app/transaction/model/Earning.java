@@ -14,4 +14,8 @@ public record Earning(
         Long earning_category_id,
         LocalDateTime created_at,
         LocalDateTime last_modified_at
-) {}
+) {
+        public Long getId() {
+                return id;
+        }
+}

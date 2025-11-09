@@ -1,27 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getEarnings, createEarning, deleteEarning } from "../api/EarningApi";
+import {
+  getEarnings,
+  createEarning,
+  updateEarning,
+  deleteEarning,
+} from "../api/EarningApi";
 import EarningTable from "../components/EarningTable";
-import AddEarningModal from "../components/AddEarningModal";
+import EditEarningModal from "../components/EditEarningModal";
 
 function EarningPage() {
   const [earnings, setEarnings] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingEarning, setEditingEarning] = useState(null);
 
   useEffect(() => {
     loadEarnings();
   }, []);
 
-  const handleAddEarning = async (earningData) => {
+  const handleSubmitEarning = async (earningData) => {
     try {
-      await createEarning(earningData);
+      if (editingEarning) {
+        // Update existing earning
+        await updateEarning(editingEarning.id, earningData);
+        toast.success("Earning updated successfully!");
+      } else {
+        // Create new earning
+        await createEarning(earningData);
+        toast.success("Earning added successfully!");
+      }
       loadEarnings();
-      toast.success("Earning added successfully!");
+      setEditingEarning(null);
     } catch (error) {
-      console.error("Error adding earning:", error);
-      toast.error("Error adding earning. Please try again.");
+      console.error("Error saving earning:", error);
+      toast.error("Error saving earning. Please try again.");
     }
+  };
+
+  const handleEditEarning = (earning) => {
+    setEditingEarning(earning);
+    setIsModalOpen(true);
   };
 
   const handleDeleteEarning = async (id) => {
@@ -57,7 +76,10 @@ function EarningPage() {
       >
         <h1 style={{ margin: 0, color: "#212529" }}>Earnings</h1>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            setEditingEarning(null);
+            setIsModalOpen(true);
+          }}
           style={{
             padding: "10px 16px",
             backgroundColor: "#28a745",
@@ -75,11 +97,19 @@ function EarningPage() {
           Create Earning
         </button>
       </div>
-      <EarningTable earnings={earnings} onDelete={handleDeleteEarning} />
-      <AddEarningModal
+      <EarningTable
+        earnings={earnings}
+        onDelete={handleDeleteEarning}
+        onEdit={handleEditEarning}
+      />
+      <EditEarningModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAddEarning}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingEarning(null);
+        }}
+        onSubmit={handleSubmitEarning}
+        initialData={editingEarning}
       />
     </div>
   );

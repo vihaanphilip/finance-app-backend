@@ -36,6 +36,17 @@ public class EarningController {
         return earningRepository.save(earning);
     }
 
+    @PostMapping("/{id}")
+    public Earning updateEarning(@RequestBody Earning earning, @PathVariable Long id) {
+        if (!id.equals(earning.id())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in path must match ID in request body");
+        }
+        if (!earningRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found");
+        }
+        return earningRepository.save(earning);
+    }
+
     @PutMapping("/{id}")
     public void update(@RequestBody Earning earning, @PathVariable Long id) {
         if (!earningRepository.existsById(id)) {

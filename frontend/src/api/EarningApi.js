@@ -14,7 +14,7 @@ export const createEarning = async (earningData) => {
 };
 
 export const updateEarning = async (id, earningData) => {
-  const response = await axios.put(`${API_URL}/${id}`, earningData);
+  const response = await axios.post(`${API_URL}/${id}`, earningData);
   return response.data;
 };
 

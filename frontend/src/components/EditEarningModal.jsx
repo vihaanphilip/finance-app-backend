@@ -3,15 +3,10 @@ import { getAccounts } from "../api/AccountApi";
 import { getEarningCategories } from "../api/EarningCategoryApi";
 import { getEarningTypes } from "../api/EarningTypeApi";
 
-function AddEarningModal({ isOpen, onClose, onSubmit }) {
+function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
   const getLocalTimestamp = () => {
     const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    return `${year}-${month}-${day}T${hours}:${minutes}:00.000Z`;
+    return now.toISOString();
   };
 
   const formatForDateTimeLocal = (isoString) => {
@@ -34,17 +29,30 @@ function AddEarningModal({ isOpen, onClose, onSubmit }) {
 
   useEffect(() => {
     if (isOpen) {
-      // Reset form when modal opens
-      const localTimestamp = getLocalTimestamp();
-      setFormData({
-        amount: "",
-        description: "",
-        earning_category_id: "",
-        earning_type_id: "",
-        account_id: "",
-        created_at: localTimestamp,
-        last_modified_at: localTimestamp,
-      });
+      // Set form data from initialData if provided, otherwise reset
+      if (initialData) {
+        setFormData({
+          id: initialData.id,
+          amount: initialData.amount,
+          description: initialData.description || "",
+          earning_category_id: initialData.earning_category_id,
+          earning_type_id: initialData.earning_type_id,
+          account_id: initialData.account_id,
+          created_at: initialData.created_at,
+          last_modified_at: initialData.last_modified_at,
+        });
+      } else {
+        const localTimestamp = getLocalTimestamp();
+        setFormData({
+          amount: "",
+          description: "",
+          earning_category_id: "",
+          earning_type_id: "",
+          account_id: "",
+          created_at: localTimestamp,
+          last_modified_at: localTimestamp,
+        });
+      }
 
       // Fetch all necessary data
       Promise.all([getEarningCategories(), getEarningTypes(), getAccounts()])
@@ -115,7 +123,7 @@ function AddEarningModal({ isOpen, onClose, onSubmit }) {
           maxWidth: "90vw",
         }}
       >
-        <h2 style={{ marginTop: 0, marginBottom: "20px" }}>Add New Earning</h2>
+        <h2 style={{ marginTop: 0, marginBottom: "20px" }}>Edit Earning</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "15px" }}>
             <label style={{ display: "block", marginBottom: "5px" }}>
@@ -286,7 +294,7 @@ function AddEarningModal({ isOpen, onClose, onSubmit }) {
                 cursor: "pointer",
               }}
             >
-              Add Earning
+              Save Changes
             </button>
           </div>
         </form>
@@ -295,4 +303,4 @@ function AddEarningModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
-export default AddEarningModal;
+export default EditEarningModal;
