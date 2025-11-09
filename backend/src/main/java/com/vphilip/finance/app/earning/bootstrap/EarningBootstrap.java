@@ -1,10 +1,10 @@
-package com.vphilip.finance.app.transaction.bootstrap;
+package com.vphilip.finance.app.earning.bootstrap;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vphilip.finance.app.transaction.model.Earning;
-import com.vphilip.finance.app.transaction.model.Earnings;
-import com.vphilip.finance.app.transaction.repository.EarningRepository;
+import com.vphilip.finance.app.earning.model.Earning;
+import com.vphilip.finance.app.earning.model.Earnings;
+import com.vphilip.finance.app.earning.repository.EarningRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

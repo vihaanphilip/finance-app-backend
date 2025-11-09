@@ -1,4 +1,4 @@
-package com.vphilip.finance.app.transaction.dto;
+package com.vphilip.finance.app.earning.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

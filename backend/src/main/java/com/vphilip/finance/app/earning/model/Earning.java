@@ -1,4 +1,4 @@
-package com.vphilip.finance.app.transaction.model;
+package com.vphilip.finance.app.earning.model;
 
 import org.springframework.data.annotation.Id;
 import java.math.BigDecimal;

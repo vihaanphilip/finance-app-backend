@@ -1,6 +1,6 @@
-package com.vphilip.finance.app.transaction.repository;
+package com.vphilip.finance.app.earning.repository;
 
-import com.vphilip.finance.app.transaction.model.EarningType;
+import com.vphilip.finance.app.earning.model.EarningType;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.ListCrudRepository;

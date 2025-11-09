@@ -1,7 +1,7 @@
-package com.vphilip.finance.app.transaction.repository;
+package com.vphilip.finance.app.earning.repository;
 
-import com.vphilip.finance.app.transaction.model.EarningCategory;
-import com.vphilip.finance.app.transaction.dto.EarningCategoryDTO;
+import com.vphilip.finance.app.earning.model.EarningCategory;
+import com.vphilip.finance.app.earning.dto.EarningCategoryDTO;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;

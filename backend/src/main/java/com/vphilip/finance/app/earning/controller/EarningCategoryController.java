@@ -1,8 +1,8 @@
-package com.vphilip.finance.app.transaction.controller;
+package com.vphilip.finance.app.earning.controller;
 
-import com.vphilip.finance.app.transaction.model.EarningCategory;
-import com.vphilip.finance.app.transaction.dto.EarningCategoryDTO;
-import com.vphilip.finance.app.transaction.repository.EarningCategoryRepository;
+import com.vphilip.finance.app.earning.model.EarningCategory;
+import com.vphilip.finance.app.earning.dto.EarningCategoryDTO;
+import com.vphilip.finance.app.earning.repository.EarningCategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
