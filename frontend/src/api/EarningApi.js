@@ -22,3 +22,12 @@ export const deleteEarning = async (id) => {
   const response = await axios.delete(`${API_URL}/${id}`);
   return response.data;
 };
+
+export const uploadEarnings = async (formData) => {
+  const response = await axios.post(`${API_URL}/upload`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};

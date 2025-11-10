@@ -27,6 +27,7 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
             LEFT JOIN account a ON e.account_id = a.id
             LEFT JOIN earning_type et ON e.earning_type_id = et.id
             LEFT JOIN earning_category ec ON e.earning_category_id = ec.id
+            ORDER BY e.id DESC
             """)
     List<EarningDTO> findAllWithLabels();
 }

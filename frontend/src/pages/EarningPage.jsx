@@ -6,13 +6,16 @@ import {
   createEarning,
   updateEarning,
   deleteEarning,
+  uploadEarnings,
 } from "../api/EarningApi";
 import EarningTable from "../components/EarningTable";
 import EditEarningModal from "../components/EditEarningModal";
+import UploadEarningModal from "../components/UploadEarningModal";
 
 function EarningPage() {
   const [earnings, setEarnings] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [editingEarning, setEditingEarning] = useState(null);
 
   useEffect(() => {
@@ -56,6 +59,17 @@ function EarningPage() {
     }
   };
 
+  const handleUpload = async (formData) => {
+    try {
+      await uploadEarnings(formData);
+      toast.success("Earnings uploaded successfully!");
+      loadEarnings();
+    } catch (error) {
+      console.error("Error uploading earnings:", error);
+      toast.error("Error uploading earnings. Please try again.");
+    }
+  };
+
   const loadEarnings = () => {
     getEarnings()
       .then((data) => setEarnings(data))
@@ -75,27 +89,47 @@ function EarningPage() {
         }}
       >
         <h1 style={{ margin: 0, color: "#212529" }}>Earnings</h1>
-        <button
-          onClick={() => {
-            setEditingEarning(null);
-            setIsModalOpen(true);
-          }}
-          style={{
-            padding: "10px 16px",
-            backgroundColor: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "14px",
-            lineHeight: "1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          Create Earning
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "#17a2b8",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px",
+              lineHeight: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Upload CSV
+          </button>
+          <button
+            onClick={() => {
+              setEditingEarning(null);
+              setIsModalOpen(true);
+            }}
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px",
+              lineHeight: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Create Earning
+          </button>
+        </div>
       </div>
       <EarningTable
         earnings={earnings}
@@ -110,6 +144,11 @@ function EarningPage() {
         }}
         onSubmit={handleSubmitEarning}
         initialData={editingEarning}
+      />
+      <UploadEarningModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onUpload={handleUpload}
       />
     </div>
   );
