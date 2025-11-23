@@ -1,7 +1,9 @@
-package com.vphilip.finance.app.earning.model;
+package com.vphilip.finance.app.earning.dto;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
+import com.vphilip.finance.app.earning.model.Earning;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

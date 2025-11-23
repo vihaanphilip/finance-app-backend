@@ -4,7 +4,7 @@ import com.vphilip.finance.app.earning.dto.EarningDTO;
 import com.vphilip.finance.app.earning.exception.CsvProcessingException;
 import com.vphilip.finance.app.earning.model.Earning;
 import com.vphilip.finance.app.earning.repository.EarningRepository;
-import com.vphilip.finance.app.earning.service.EarningCsvService;
+import com.vphilip.finance.app.earning.service.EarningService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +20,9 @@ import java.util.List;
 public class EarningController {
 
     private final EarningRepository earningRepository;
-    private final EarningCsvService earningCsvService;
+    private final EarningService earningCsvService;
 
-    public EarningController(EarningRepository earningRepository, EarningCsvService earningCsvService) {
+    public EarningController(EarningRepository earningRepository, EarningService earningCsvService) {
         this.earningRepository = earningRepository;
         this.earningCsvService = earningCsvService;
     }

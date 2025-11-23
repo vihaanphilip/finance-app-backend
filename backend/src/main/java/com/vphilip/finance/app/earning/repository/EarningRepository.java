@@ -4,7 +4,9 @@ import com.vphilip.finance.app.earning.dto.EarningDTO;
 import com.vphilip.finance.app.earning.model.Earning;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface EarningRepository extends ListCrudRepository<Earning, Long> {
@@ -30,4 +32,12 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
             ORDER BY e.id DESC
             """)
     List<EarningDTO> findAllWithLabels();
+
+    @Query("""
+        SELECT COALESCE(SUM(e.amount), 0)
+        FROM earning e
+        WHERE EXTRACT(YEAR FROM e.created_at) = :year
+          AND EXTRACT(MONTH FROM e.created_at) = :month
+        """)
+    BigDecimal totalEarningsForMonth(@Param("year") int year, @Param("month") int month);
 }
