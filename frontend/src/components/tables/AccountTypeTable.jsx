@@ -1,35 +1,31 @@
 import React from "react";
-import DataTable from "./DataTable";
+import DataTable from "../common/DataTable";
 
-function AccountTable({ accounts }) {
+function AccountTypeTable({ accountTypes }) {
   const columns = [
     {
       key: "id",
       title: "ID",
     },
     {
-      key: "name",
-      title: "Account Name",
+      key: "label",
+      title: "Label",
       highlight: true,
     },
     {
       key: "description",
       title: "Description",
     },
-    {
-      key: "account_type_label",
-      title: "Account Type",
-    },
   ];
 
   return (
     <DataTable
-      data={accounts}
+      data={accountTypes}
       columns={columns}
       keyField="id"
-      // title="Accounts"
+      title="Account Types"
     />
   );
 }
 
-export default AccountTable;
+export default AccountTypeTable;

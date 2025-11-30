@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { getAccounts, createAccount } from "../api/AccountApi";
-import AccountTable from "../components/AccountTable";
-import AddAccountModal from "../components/AddAccountModal";
+import AccountTable from "../components/tables/AccountTable";
+import AddAccountModal from "../components/forms/AddAccountModal";
 
 function AccountPage() {
   const [accounts, setAccounts] = useState([]);
@@ -19,10 +19,10 @@ function AccountPage() {
     try {
       const newAccount = await createAccount(accountData);
       console.log("Account created:", newAccount);
-      
+
       // Show success toast
       toast.success("Account created successfully!");
-      
+
       // Refresh the accounts list
       const updatedAccounts = await getAccounts();
       setAccounts(updatedAccounts);
@@ -76,7 +76,7 @@ function AccountPage() {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddAccount}
       />
-      
+
       <ToastContainer
         position="top-right"
         autoClose={3000}

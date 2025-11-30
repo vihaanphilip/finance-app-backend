@@ -8,9 +8,9 @@ import {
   deleteEarning,
   uploadEarnings,
 } from "../api/EarningApi";
-import EarningTable from "../components/EarningTable";
-import EditEarningModal from "../components/EditEarningModal";
-import UploadEarningModal from "../components/UploadEarningModal";
+import EarningTable from "../components/tables/EarningTable";
+import EditEarningModal from "../components/forms/EditEarningModal";
+import UploadEarningModal from "../components/forms/UploadEarningModal";
 
 function EarningPage() {
   const [earnings, setEarnings] = useState([]);

@@ -1,7 +1,7 @@
 // src/pages/EarningTypePage.jsx
 import React, { useEffect, useState } from "react";
 import { getEarningTypes } from "../api/EarningTypeApi";
-import EarningTypeTable from "../components/EarningTypeTable";
+import EarningTypeTable from "../components/tables/EarningTypeTable";
 
 function EarningTypePage() {
   const [earningTypes, setEarningTypes] = useState([]);

@@ -5,8 +5,8 @@ import {
   getEarningCategories,
   createEarningCategory,
 } from "../api/EarningCategoryApi";
-import EarningCategoryTable from "../components/EarningCategoryTable";
-import AddEarningCategoryModal from "../components/AddEarningCategoryModal";
+import EarningCategoryTable from "../components/tables/EarningCategoryTable";
+import AddEarningCategoryModal from "../components/forms/AddEarningCategoryModal";
 
 console.log("✅ EarningCategoryPage mounted");
 

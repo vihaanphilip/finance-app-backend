@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getAccounts } from "../api/AccountApi";
-import { getEarningCategories } from "../api/EarningCategoryApi";
-import { getEarningTypes } from "../api/EarningTypeApi";
+import { getAccounts } from "../../api/AccountApi";
+import { getEarningCategories } from "../../api/EarningCategoryApi";
+import { getEarningTypes } from "../../api/EarningTypeApi";
 
 function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
   const getLocalTimestamp = () => {

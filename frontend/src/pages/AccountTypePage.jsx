@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAccountTypes } from "../api/AccountTypeApi";
-import AccountTypeTable from "../components/AccountTypeTable";
+import AccountTypeTable from "../components/tables/AccountTypeTable";
 
 function AccountTypePage() {
   const [accountTypes, setAccountTypes] = useState([]);

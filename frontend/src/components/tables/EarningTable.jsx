@@ -1,5 +1,5 @@
 import React from "react";
-import DataTable from "./DataTable";
+import DataTable from "../common/DataTable";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 
 function EarningTable({ earnings, onDelete, onEdit }) {

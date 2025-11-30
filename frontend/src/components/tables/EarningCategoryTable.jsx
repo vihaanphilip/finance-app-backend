@@ -1,21 +1,22 @@
 import React from "react";
-import DataTable from "./DataTable";
+import DataTable from "../common/DataTable";
 
-function EarningTypeTable({ earningTypes }) {
+function EarningCategoryTable({ earningCategories }) {
   const columns = [
     { key: "id", title: "ID" },
     { key: "label", title: "Label", highlight: true },
     { key: "description", title: "Description" },
+    { key: "earning_type_label", title: "Earning Type" },
   ];
 
   return (
     <DataTable
-      data={earningTypes}
+      data={earningCategories}
       columns={columns}
       keyField="id"
-      title="Earning Types"
+      // title="Earning Categories"
     />
   );
 }
 
-export default EarningTypeTable;
+export default EarningCategoryTable;

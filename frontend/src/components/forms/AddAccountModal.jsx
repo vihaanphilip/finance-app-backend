@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { getEarningTypes } from "../api/EarningTypeApi";
-import EditModal from "./EditModal";
+import { getAccountTypes } from "../../api/AccountTypeApi";
+import EditModal from "../common/EditModal";
 
-function AddEarningCategoryModal({ isOpen, onClose, onSubmit }) {
+function AddAccountModal({ isOpen, onClose, onSubmit }) {
   const [formData, setFormData] = useState({
-    label: "",
+    name: "",
     description: "",
-    earning_type_id: "",
+    account_type_id: "",
   });
-
-  // Test data for earning types (unimplemented)
-  // const earningTypes = [
-  //   { id: 1, label: "Salary" },
-  //   { id: 2, label: "Bonus" },
-  //   { id: 3, label: "Commission" },
-  //   { id: 4, label: "Other" },
-  // ];
-
-  const [earningTypes, setEarningTypes] = useState([]);
+  const [accountTypes, setAccountTypes] = useState([]);
 
   useEffect(() => {
     if (isOpen) {
-      getEarningTypes()
+      getAccountTypes()
         .then((data) => {
-          console.log("Fetched earning types:", data);
-          setEarningTypes(data);
+          console.log("Fetched account types:", data);
+          setAccountTypes(data);
         })
         .catch((err) => {
-          console.error("Error fetching earning types:", err);
-          setEarningTypes([]);
+          console.error("Error fetching account types:", err);
+          setAccountTypes([]);
         });
     }
   }, [isOpen]);
@@ -44,31 +35,27 @@ function AddEarningCategoryModal({ isOpen, onClose, onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-    setFormData({ label: "", description: "", earning_type_id: "" });
+    setFormData({ name: "", description: "", account_type_id: "" });
   };
 
   const handleClose = () => {
-    setFormData({ label: "", description: "", earning_type_id: "" });
+    setFormData({ name: "", description: "", account_type_id: "" });
     onClose();
   };
 
   return (
-    <EditModal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title="Create New Earning Category"
-    >
+    <EditModal isOpen={isOpen} onClose={handleClose} title="Create New Account">
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "15px" }}>
           <label
             style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}
           >
-            Label
+            Account Name
           </label>
           <input
             type="text"
-            name="label"
-            value={formData.label}
+            name="name"
+            value={formData.name}
             onChange={handleInputChange}
             required
             style={{
@@ -118,11 +105,11 @@ function AddEarningCategoryModal({ isOpen, onClose, onSubmit }) {
               fontWeight: "500",
             }}
           >
-            Earning Type
+            Account Type
           </label>
           <select
-            name="earning_type_id"
-            value={formData.earning_type_id}
+            name="account_type_id"
+            value={formData.account_type_id}
             onChange={handleInputChange}
             required
             style={{
@@ -135,8 +122,8 @@ function AddEarningCategoryModal({ isOpen, onClose, onSubmit }) {
               boxSizing: "border-box",
             }}
           >
-            <option value="">Select Earning Type</option>
-            {earningTypes.map((type) => (
+            <option value="">Select Account Type</option>
+            {accountTypes.map((type) => (
               <option key={type.id} value={type.id}>
                 {type.label}
               </option>
@@ -184,4 +171,4 @@ function AddEarningCategoryModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
-export default AddEarningCategoryModal;
+export default AddAccountModal;
