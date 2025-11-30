@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MonthSelector from "../components/common/MonthSelector";
+import { getEarningSummary } from "../api/EarningApi";
+import { toast } from "react-toastify";
 
 function EarningSummary() {
   const currentDate = new Date();
@@ -7,10 +9,31 @@ function EarningSummary() {
     year: currentDate.getFullYear(),
     month: currentDate.getMonth() + 1,
   });
+  const [summaryData, setSummaryData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchSummary = async () => {
+    setLoading(true);
+    try {
+      const data = await getEarningSummary(
+        selectedMonth.year,
+        selectedMonth.month
+      );
+      setSummaryData(data);
+    } catch (error) {
+      toast.error("Failed to fetch earning summary");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSummary();
+  }, [selectedMonth]);
 
   const handleMonthChange = (monthData) => {
     setSelectedMonth(monthData);
-    console.log("Selected:", monthData); // You can fetch data here
   };
 
   return (
@@ -20,10 +43,20 @@ function EarningSummary() {
         selectedMonth={selectedMonth}
         onMonthChange={handleMonthChange}
       />
-      <p>
-        Selected: {selectedMonth.month}/{selectedMonth.year}
-      </p>
-      {/* Add your earning summary content here */}
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : summaryData ? (
+        <div style={{ marginTop: "20px" }}>
+          <h2>
+            Summary for {selectedMonth.month}/{selectedMonth.year}
+          </h2>
+          <pre>{JSON.stringify(summaryData, null, 2)}</pre>
+          {/* Add your summary display components here */}
+        </div>
+      ) : (
+        <p>No data available</p>
+      )}
     </div>
   );
 }

@@ -31,3 +31,26 @@ export const uploadEarnings = async (formData) => {
   });
   return response.data;
 };
+
+/**
+ * Get earning summary for a specific month
+ * @param {number} year - The year (e.g., 2025)
+ * @param {number} month - The month (1-12)
+ * @returns {Promise} - Promise with earning summary data
+ */
+export const getEarningSummary = async (year, month) => {
+  try {
+    // Format date as YYYY-MM-01
+    const date = `${year}-${String(month).padStart(2, "0")}-01`;
+
+    const response = await axios.get(`${API_URL}/summary`, {
+      params: {
+        date: date,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching earning summary:", error);
+    throw error;
+  }
+};
