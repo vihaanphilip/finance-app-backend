@@ -2,6 +2,7 @@ package com.vphilip.finance.app.test;
 
 import com.vphilip.finance.app.earning.model.EarningSummary;
 import com.vphilip.finance.app.earning.service.EarningService;
+import com.vphilip.finance.app.earning.service.EarningSummaryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,10 @@ public class TestRunner implements CommandLineRunner {
     @Value("${app.bootstrap-test-runner:false}")
     private boolean bootstrapEnabled;
 
-    private final EarningService earningService;
+    private final EarningSummaryService earningSummaryService;
 
-    public TestRunner(EarningService earningService) {
-        this.earningService = earningService;
+    public TestRunner(EarningSummaryService earningSummaryService) {
+        this.earningSummaryService = earningSummaryService;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class TestRunner implements CommandLineRunner {
         // Add your test code here
 
         // Test: getEarningsSummaryByMonth action
-        EarningSummary earningSummary = earningService.getEarningsSummaryByMonth(LocalDate.of(2025,10,1));
+        EarningSummary earningSummary = earningSummaryService.getEarningsSummaryByMonth(LocalDate.of(2025,10,1));
         log.info("Earning Summary for 2025-10: " + earningSummary.total_earnings());
 
         log.info("=== TestRunner Completed ===");

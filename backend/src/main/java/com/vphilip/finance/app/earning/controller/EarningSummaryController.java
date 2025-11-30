@@ -2,7 +2,7 @@ package com.vphilip.finance.app.earning.controller;
 
 import com.vphilip.finance.app.earning.model.EarningSummary;
 import com.vphilip.finance.app.earning.service.EarningService;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.vphilip.finance.app.earning.service.EarningSummaryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,16 +14,16 @@ import java.time.LocalDate;
 @RequestMapping("/api/v1/earnings/summary")
 public class EarningSummaryController {
 
-    private final EarningService earningService;
+    private final EarningSummaryService earningSummaryService;
 
-    public EarningSummaryController(EarningService earningService) {
-        this.earningService = earningService;
+    public EarningSummaryController(EarningSummaryService earningSummaryService) {
+        this.earningSummaryService = earningSummaryService;
     }
 
     @GetMapping("")
     public EarningSummary getMonthlySummary(
-            @RequestParam("date") LocalDate date
+            @RequestParam LocalDate date
     ) {
-        return earningService.getEarningsSummaryByMonth(date);
+        return earningSummaryService.getEarningsSummaryByMonth(date);
     }
 }

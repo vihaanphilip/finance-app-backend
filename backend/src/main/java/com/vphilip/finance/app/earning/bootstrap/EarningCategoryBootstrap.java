@@ -3,7 +3,7 @@ package com.vphilip.finance.app.earning.bootstrap;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vphilip.finance.app.earning.model.EarningCategory;
-import com.vphilip.finance.app.earning.model.EarningCategories;
+import com.vphilip.finance.app.earning.model.EarningCategoryList;
 import com.vphilip.finance.app.earning.repository.EarningCategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class EarningCategoryBootstrap implements CommandLineRunner {
         }
         log.info("EarningCategoryBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/earning_categories.json")) {
-            EarningCategories allEarningCategories = objectMapper.readValue(inputStream, EarningCategories.class);
+            EarningCategoryList allEarningCategories = objectMapper.readValue(inputStream, EarningCategoryList.class);
             log.info("Reading {} earning categories from JSON data and saving to database.", allEarningCategories.earningCategories().size());
             for (EarningCategory earningCategory : allEarningCategories.earningCategories()) {
                 log.info("Processing earning category: label={}, description={}, earning_type_id={}",

@@ -3,7 +3,7 @@ package com.vphilip.finance.app.earning.bootstrap;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vphilip.finance.app.earning.model.Earning;
-import com.vphilip.finance.app.earning.model.Earnings;
+import com.vphilip.finance.app.earning.model.EarningList;
 import com.vphilip.finance.app.earning.repository.EarningRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class EarningBootstrap implements CommandLineRunner {
         }
         log.info("EarningBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/earnings.json")) {
-            Earnings allEarnings = objectMapper.readValue(inputStream, Earnings.class);
+            EarningList allEarnings = objectMapper.readValue(inputStream, EarningList.class);
             log.info("Reading {} earnings from JSON data and saving to database.", allEarnings.earnings().size());
             LocalDateTime now = LocalDateTime.now();
             for (Earning earning : allEarnings.earnings()) {
