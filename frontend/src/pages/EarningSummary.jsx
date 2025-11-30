@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MonthSelector from "../components/common/MonthSelector";
+import EarningSummaryTable from "../components/tables/EarningSummaryTable";
 import { getEarningSummary } from "../api/EarningApi";
 import { toast } from "react-toastify";
 
@@ -48,11 +49,7 @@ function EarningSummary() {
         <p>Loading...</p>
       ) : summaryData ? (
         <div style={{ marginTop: "20px" }}>
-          <h2>
-            Summary for {selectedMonth.month}/{selectedMonth.year}
-          </h2>
-          <pre>{JSON.stringify(summaryData, null, 2)}</pre>
-          {/* Add your summary display components here */}
+          <EarningSummaryTable summaryData={summaryData} />
         </div>
       ) : (
         <p>No data available</p>
