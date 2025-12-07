@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/earningtypes")
+@RequestMapping("/api/v1/earningtypes")
 public class EarningTypeController {
     private final EarningTypeRepository earningTypeRepository;
 
@@ -34,10 +34,31 @@ public class EarningTypeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    void createEarningType(@RequestBody EarningType earningType) {
+    EarningType createEarningType(@RequestBody EarningType earningType) {
         earningTypeRepository.insert(earningType);
+        return earningType;
     }
 
+    @PostMapping("/{id}")
+    EarningType updateEarningType(@RequestBody EarningType earningType, @PathVariable Long id) {
+        if (!id.equals(earningType.id())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in path must match ID in request body");
+        }
+        if (!earningTypeRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "EarningType not found");
+        }
+        return earningTypeRepository.save(earningType);
+    }
+
+    @DeleteMapping("/{id}")
+    EarningType deleteEarningType(@PathVariable Long id) {
+        Optional<EarningType> earningType = earningTypeRepository.findById(id);
+        if (earningType.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        earningTypeRepository.deleteById(id);
+        return earningType.get();
+    }
 }
 
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../config/api.js";
 
-const API_URL = `${config.API_BASE_URL}/api/earningtypes`;
+const API_URL = `${config.API_BASE_URL}/api/v1/earningtypes`;
 
 export const getEarningTypes = async () => {
   const response = await axios.get(API_URL);
@@ -14,7 +14,7 @@ export const createEarningType = async (earningType) => {
 };
 
 export const updateEarningType = async (id, earningType) => {
-  const response = await axios.put(`${API_URL}/${id}`, earningType);
+  const response = await axios.post(`${API_URL}/${id}`, earningType);
   return response.data;
 };
 
