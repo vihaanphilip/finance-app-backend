@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts, createAccount } from "../api/AccountApi";
@@ -8,6 +9,7 @@ import AddAccountModal from "../components/forms/AddAccountModal";
 function AccountPage() {
   const [accounts, setAccounts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAccounts()
@@ -46,27 +48,50 @@ function AccountPage() {
         }}
       >
         <h1 style={{ margin: 0, color: "#212529" }}>Accounts</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          style={{
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            padding: "10px 16px",
-            fontSize: "14px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
-        >
-          Create Account
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => navigate("/accounttypes")}
+            style={{
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              padding: "10px 16px",
+              fontSize: "14px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
+          >
+            View Account Types
+          </button>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            style={{
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              padding: "10px 16px",
+              fontSize: "14px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
+          >
+            Create Account
+          </button>
+        </div>
       </div>
 
       <AccountTable accounts={accounts} />
