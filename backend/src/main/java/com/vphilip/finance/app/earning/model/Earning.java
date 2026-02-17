@@ -2,6 +2,7 @@ package com.vphilip.finance.app.earning.model;
 
 import org.springframework.data.annotation.Id;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record Earning(
@@ -12,6 +13,7 @@ public record Earning(
     BigDecimal amount,
     Long earning_type_id,
     Long earning_category_id,
+    LocalDate transaction_date,
     LocalDateTime created_at,
     LocalDateTime last_modified_at
 ) {

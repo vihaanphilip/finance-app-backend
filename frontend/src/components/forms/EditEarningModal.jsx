@@ -4,13 +4,12 @@ import { getEarningCategories } from "../../api/EarningCategoryApi";
 import { getEarningTypes } from "../../api/EarningTypeApi";
 
 function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
-  const getLocalTimestamp = () => {
+  const getLocalDate = () => {
     const now = new Date();
-    return now.toISOString();
-  };
-
-  const formatForDateTimeLocal = (isoString) => {
-    return isoString.slice(0, 16);
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   };
 
   const [formData, setFormData] = useState({
@@ -19,8 +18,7 @@ function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
     earning_category_id: "",
     earning_type_id: "",
     account_id: "",
-    created_at: getLocalTimestamp(),
-    last_modified_at: getLocalTimestamp(),
+    transaction_date: getLocalDate(),
   });
 
   const [earningCategories, setEarningCategories] = useState([]);
@@ -38,19 +36,17 @@ function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
           earning_category_id: initialData.earning_category_id,
           earning_type_id: initialData.earning_type_id,
           account_id: initialData.account_id,
-          created_at: initialData.created_at,
-          last_modified_at: initialData.last_modified_at,
+          transaction_date: initialData.transaction_date,
         });
       } else {
-        const localTimestamp = getLocalTimestamp();
+        const localDate = getLocalDate();
         setFormData({
           amount: "",
           description: "",
           earning_category_id: "",
           earning_type_id: "",
           account_id: "",
-          created_at: localTimestamp,
-          last_modified_at: localTimestamp,
+          transaction_date: localDate,
         });
       }
 
@@ -70,29 +66,15 @@ function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "created_at") {
-      // Store the exact string from the input with Z suffix to mark it as UTC
-      const isoString = `${value}:00.000Z`;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: isoString,
-        last_modified_at: isoString,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const submissionData = {
-      ...formData,
-      last_modified_at: getLocalTimestamp(),
-    };
-    onSubmit(submissionData);
+    onSubmit(formData);
     onClose();
   };
 
@@ -170,9 +152,9 @@ function EditEarningModal({ isOpen, onClose, onSubmit, initialData }) {
               Transaction Date *
             </label>
             <input
-              type="datetime-local"
-              name="created_at"
-              value={formatForDateTimeLocal(formData.created_at)}
+              type="date"
+              name="transaction_date"
+              value={formData.transaction_date}
               onChange={handleInputChange}
               required
               style={{

@@ -41,7 +41,20 @@ public class EarningController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Earning create(@RequestBody Earning earning) {
-        return earningRepository.save(earning);
+        // Create new earning with current timestamps
+        Earning newEarning = new Earning(
+            earning.id(),
+            earning.account_id(),
+            earning.description(),
+            earning.amount(),
+            earning.earning_type_id(),
+            earning.earning_category_id(),
+            earning.transaction_date(),
+            java.time.LocalDateTime.now(), // Set created_at to current time
+            java.time.LocalDateTime.now()  // Set last_modified_at to current time
+        );
+
+        return earningRepository.save(newEarning);
     }
 
     @PostMapping("/{id}")
@@ -49,18 +62,44 @@ public class EarningController {
         if (!id.equals(earning.id())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in path must match ID in request body");
         }
-        if (!earningRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found");
-        }
-        return earningRepository.save(earning);
+        Earning existingEarning = earningRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found"));
+
+        // Create updated earning with preserved created_at and updated last_modified_at
+        Earning updatedEarning = new Earning(
+            earning.id(),
+            earning.account_id(),
+            earning.description(),
+            earning.amount(),
+            earning.earning_type_id(),
+            earning.earning_category_id(),
+            earning.transaction_date(),
+            existingEarning.created_at(), // Preserve original created_at
+            java.time.LocalDateTime.now() // Set last_modified_at to current time
+        );
+
+        return earningRepository.save(updatedEarning);
     }
 
     @PutMapping("/{id}")
     public void update(@RequestBody Earning earning, @PathVariable Long id) {
-        if (!earningRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found");
-        }
-        earningRepository.save(earning);
+        Earning existingEarning = earningRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found"));
+
+        // Create updated earning with preserved created_at and updated last_modified_at
+        Earning updatedEarning = new Earning(
+            id,
+            earning.account_id(),
+            earning.description(),
+            earning.amount(),
+            earning.earning_type_id(),
+            earning.earning_category_id(),
+            earning.transaction_date(),
+            existingEarning.created_at(), // Preserve original created_at
+            java.time.LocalDateTime.now() // Set last_modified_at to current time
+        );
+
+        earningRepository.save(updatedEarning);
     }
 
     @DeleteMapping("/{id}")

@@ -55,6 +55,7 @@ public class EarningService {
                                 dto.getAmount(),
                                 dto.getEarning_type_id(),
                                 dto.getEarning_category_id(),
+                                dto.getTransaction_date(),
                                 createdAt,
                                 now
                         );

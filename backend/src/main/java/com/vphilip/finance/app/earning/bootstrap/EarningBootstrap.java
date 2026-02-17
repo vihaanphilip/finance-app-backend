@@ -49,6 +49,7 @@ public class EarningBootstrap implements CommandLineRunner {
                         earning.amount(),
                         earning.earning_type_id(),
                         earning.earning_category_id(),
+                        earning.transaction_date(),
                         now,
                         now
                 );

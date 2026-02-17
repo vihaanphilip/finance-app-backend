@@ -16,6 +16,10 @@
 --ALTER TABLE account
 --ADD COLUMN description VARCHAR(2000) NOT NULL DEFAULT '';
 
+-- 18/02/2026 - Add transaction_date column to earning table
+--ALTER TABLE earning
+--ADD COLUMN transaction_date DATE NOT NULL DEFAULT CURRENT_DATE;
+
 
 CREATE TABLE IF NOT EXISTS account_type (
     id BIGINT PRIMARY KEY,
@@ -54,6 +58,7 @@ CREATE TABLE IF NOT EXISTS earning (
     amount DECIMAL(19,2) NOT NULL,
     earning_type_id BIGINT NOT NULL,
     earning_category_id BIGINT NOT NULL,
+    transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
     created_at TIMESTAMP NOT NULL,
     last_modified_at TIMESTAMP NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(id),

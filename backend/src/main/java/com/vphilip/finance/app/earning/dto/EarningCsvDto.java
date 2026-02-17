@@ -5,6 +5,7 @@ import com.opencsv.bean.CsvDate;
 import com.vphilip.finance.app.earning.model.Earning;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class EarningCsvDto {
@@ -25,6 +26,10 @@ public class EarningCsvDto {
 
     @CsvBindByName(column = "earning_category_id")
     private Long earning_category_id;
+
+    @CsvBindByName(column = "transaction_date")
+    @CsvDate(value = "yyyy-MM-dd")
+    private LocalDate transaction_date;
 
     @CsvBindByName(column = "created_at")
     @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss")
@@ -56,6 +61,9 @@ public class EarningCsvDto {
     public Long getEarning_category_id() { return earning_category_id; }
     public void setEarning_category_id(Long earning_category_id) { this.earning_category_id = earning_category_id; }
 
+    public LocalDate getTransaction_date() { return transaction_date; }
+    public void setTransaction_date(LocalDate transaction_date) { this.transaction_date = transaction_date; }
+
     public LocalDateTime getCreated_at() { return created_at; }
     public void setCreated_at(LocalDateTime created_at) { this.created_at = created_at; }
 
@@ -71,6 +79,7 @@ public class EarningCsvDto {
             amount,
             earning_type_id,
             earning_category_id,
+            transaction_date,
             created_at,
             last_modified_at
         );

@@ -23,6 +23,7 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
                    et.label as earning_type_label,
                    e.earning_category_id, 
                    ec.label as earning_category_label,
+                   e.transaction_date,
                    e.created_at, 
                    e.last_modified_at
             FROM earning e
