@@ -8,24 +8,9 @@ function HomePage() {
     navigate("/accounts");
   };
 
-  // Handler to navigate to Earning Types page
-  const handleGoToEarningTypes = () => {
-    navigate("/earningtypes");
-  };
-
-  // Handler to navigate to Earning Categories page
-  const handleGoToEarningCategories = () => {
-    navigate("/earningcategories");
-  };
-
   // Handler to navigate to Earnings page
   const handleGoToEarnings = () => {
     navigate("/earnings");
-  };
-
-  // Handler to navigate to Earning Summary page
-  const handleGoToEarningSummary = () => {
-    navigate("/earningsummary");
   };
 
   return (
@@ -68,13 +53,13 @@ function HomePage() {
         >
           View Accounts
         </button>
-        {/* Button to navigate to Earning Types page */}
+        {/* Button to navigate to Earnings page */}
         <button
-          onClick={handleGoToEarningTypes}
+          onClick={handleGoToEarnings}
           style={{
             padding: "15px 30px",
             fontSize: "1.2em",
-            backgroundColor: "#28a745", // Green color for distinction
+            backgroundColor: "#28a745", // Green color matching Earning Types
             color: "white",
             border: "none",
             borderRadius: "8px",
@@ -85,63 +70,7 @@ function HomePage() {
           onMouseOver={(e) => (e.target.style.backgroundColor = "#218838")} // Darker green on hover
           onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
         >
-          View Earning Types
-        </button>
-        {/* Button to navigate to Earning Categories page */}
-        <button
-          onClick={handleGoToEarningCategories}
-          style={{
-            padding: "15px 30px",
-            fontSize: "1.2em",
-            backgroundColor: "#ffc107", // Yellow/amber color for distinction
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#e0a800")} // Darker amber on hover
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#ffc107")}
-        >
-          View Earning Categories
-        </button>
-        {/* Button to navigate to Earnings page */}
-        <button
-          onClick={handleGoToEarnings}
-          style={{
-            padding: "15px 30px",
-            fontSize: "1.2em",
-            backgroundColor: "#6f42c1", // Purple color for distinction
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#563d7c")} // Darker purple on hover
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#6f42c1")}
-        >
           View Earnings
-        </button>
-        <button
-          onClick={handleGoToEarningSummary}
-          style={{
-            padding: "15px 30px",
-            fontSize: "1.2em",
-            backgroundColor: "#17a2b8", // Teal color for distinction
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#138496")} // Darker teal on hover
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#17a2b8")}
-        >
-          Earning Summary
         </button>
       </div>
     </div>

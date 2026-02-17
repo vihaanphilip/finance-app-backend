@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -17,6 +18,7 @@ function EarningPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [editingEarning, setEditingEarning] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadEarnings();
@@ -90,6 +92,69 @@ function EarningPage() {
       >
         <h1 style={{ margin: 0, color: "#212529" }}>Earnings</h1>
         <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => navigate("/earningtypes")}
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px",
+              lineHeight: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#218838")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
+          >
+            Earning Types
+          </button>
+          <button
+            onClick={() => navigate("/earningcategories")}
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px",
+              lineHeight: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#218838")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
+          >
+            Earning Categories
+          </button>
+          <button
+            onClick={() => navigate("/earningsummary")}
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px",
+              lineHeight: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#218838")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
+          >
+            Earning Summary
+          </button>
           <button
             onClick={() => setIsUploadModalOpen(true)}
             style={{
