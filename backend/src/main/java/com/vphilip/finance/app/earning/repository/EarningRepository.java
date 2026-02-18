@@ -14,17 +14,17 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
     // The Long type parameter matches our id field type from the Earning record
 
     @Query("""
-            SELECT e.id, 
-                   e.account_id, 
+            SELECT e.id,
+                   e.account_id,
                    a.name as account_label,
-                   e.description, 
+                   e.description,
                    e.amount,
-                   e.earning_type_id, 
+                   e.earning_type_id,
                    et.label as earning_type_label,
-                   e.earning_category_id, 
+                   e.earning_category_id,
                    ec.label as earning_category_label,
                    e.transaction_date,
-                   e.created_at, 
+                   e.created_at,
                    e.last_modified_at
             FROM earning e
             LEFT JOIN account a ON e.account_id = a.id

@@ -1,14 +1,13 @@
 package com.vphilip.finance.app.expense.model;
 
-//import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Id;
 
 public record Expense(
-//    @Id
+    @Id
     Long id,
     Long account_id,
     String description,
     java.math.BigDecimal amount,
-    Long expense_type_id,
     Long expense_category_id,
     java.time.LocalDate transaction_date,
     java.time.LocalDateTime created_at,
