@@ -1,0 +1,15 @@
+{
+  "expense_types": [
+    {
+      "id": 1,
+      "label": "Fixed Costs",
+      "description": "Regular expenses that remain constant each month, such as rent, mortgage payments, insurance premiums, and subscription services"
+    },
+    {
+      "id": 2,
+      "label": "Guilt-free Spendings",
+      "description": "Discretionary expenses that are not essential but bring joy and satisfaction, such as dining out, entertainment, hobbies, and travel"
+    }
+  ]
+}
+

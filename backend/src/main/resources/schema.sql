@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS account (
 );
 
 -- 12/10/2025 - Adding earning_type table
-
 CREATE TABLE IF NOT EXISTS earning_type (
     id BIGINT PRIMARY KEY,
     label VARCHAR(500) NOT NULL,
@@ -64,4 +63,33 @@ CREATE TABLE IF NOT EXISTS earning (
     FOREIGN KEY (account_id) REFERENCES account(id),
     FOREIGN KEY (earning_type_id) REFERENCES earning_type(id),
     FOREIGN KEY (earning_category_id) REFERENCES earning_category(id)
+);
+
+-- 18/02/2026 - Add expense_type table
+CREATE TABLE IF NOT EXISTS expense_type (
+    id BIGINT PRIMARY KEY,
+    label VARCHAR(500) NOT NULL,
+    description VARCHAR(2000) NOT NULL
+);
+
+-- 18/02/2026 - Add expense_category table
+CREATE TABLE IF NOT EXISTS expense_category (
+    id BIGSERIAL PRIMARY KEY,
+    label VARCHAR(500) NOT NULL,
+    description VARCHAR(2000) NOT NULL,
+    expense_type_id BIGINT NOT NULL
+);
+
+-- 18/02/2026 - Add expense table
+CREATE TABLE IF NOT EXISTS expense (
+    id BIGSERIAL PRIMARY KEY,
+    account_id BIGINT NOT NULL,
+    description VARCHAR(2000) NOT NULL,
+    amount DECIMAL(19,2) NOT NULL,
+    expense_category_id BIGINT NOT NULL,
+    transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    created_at TIMESTAMP NOT NULL,
+    last_modified_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(id),
+    FOREIGN KEY (expense_category_id) REFERENCES expense_category(id)
 );
