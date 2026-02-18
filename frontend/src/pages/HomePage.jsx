@@ -13,6 +13,11 @@ function HomePage() {
     navigate("/earnings");
   };
 
+  // Handler to navigate to Expenses page
+  const handleGoToExpenses = () => {
+    navigate("/expenses");
+  };
+
   return (
     <div
       style={{
@@ -71,6 +76,25 @@ function HomePage() {
           onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
         >
           View Earnings
+        </button>
+        {/* Button to navigate to Expenses page */}
+        <button
+          onClick={handleGoToExpenses}
+          style={{
+            padding: "15px 30px",
+            fontSize: "1.2em",
+            backgroundColor: "#dc3545", // Red color for expenses
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#c82333")} // Darker red on hover
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#dc3545")}
+        >
+          View Expenses
         </button>
       </div>
     </div>
