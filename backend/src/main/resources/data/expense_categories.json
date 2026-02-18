@@ -1,0 +1,22 @@
+{
+  "expense_categories": [
+    {
+      "id": 1,
+      "label": "Family",
+      "description": "Expenses related to family needs",
+      "expense_type_id": 1
+    },
+    {
+      "id": 2,
+      "label": "Grocery",
+      "description": "Expenses for food and household supplies purchased from grocery stores",
+      "expense_type_id": 1
+    },
+    {
+      "id": 3,
+      "label": "Accessories",
+      "description": "Expenses for non-essential items such as technology gadgets and fashion accessories",
+      "expense_type_id": 2
+    }
+  ]
+}

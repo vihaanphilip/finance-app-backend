@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS expense_type (
 
 -- 18/02/2026 - Add expense_category table
 CREATE TABLE IF NOT EXISTS expense_category (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     label VARCHAR(500) NOT NULL,
     description VARCHAR(2000) NOT NULL,
     expense_type_id BIGINT NOT NULL
