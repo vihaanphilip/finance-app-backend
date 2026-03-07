@@ -10,10 +10,13 @@ import {
   uploadExpenses,
 } from "../api/ExpenseApi";
 import ExpenseTable from "../components/tables/ExpenseTable";
+import EditExpenseModal from "../components/forms/EditExpenseModal";
 
 function ExpensePage() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingExpense, setEditingExpense] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,10 +48,26 @@ function ExpensePage() {
     }
   };
 
+  const handleSubmitExpense = async (expenseData) => {
+    try {
+      if (editingExpense) {
+        await updateExpense(editingExpense.id, expenseData);
+        toast.success("Expense updated successfully!");
+      } else {
+        await createExpense(expenseData);
+        toast.success("Expense added successfully!");
+      }
+      setEditingExpense(null);
+      fetchExpenses();
+    } catch (error) {
+      console.error("Error saving expense:", error);
+      toast.error("Error saving expense. Please try again.");
+    }
+  };
+
   const handleEditExpense = (expense) => {
-    // TODO: Implement edit functionality
-    console.log("Edit expense:", expense);
-    toast.info("Edit functionality not yet implemented");
+    setEditingExpense(expense);
+    setIsModalOpen(true);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -149,7 +168,10 @@ function ExpensePage() {
             Upload CSV
           </button>
           <button
-            onClick={() => toast.info("Create Expense not yet implemented")}
+            onClick={() => {
+              setEditingExpense(null);
+              setIsModalOpen(true);
+            }}
             style={{
               padding: "10px 16px",
               backgroundColor: "#dc3545",
@@ -173,6 +195,16 @@ function ExpensePage() {
         expenses={expenses}
         onDelete={handleDeleteExpense}
         onEdit={handleEditExpense}
+      />
+
+      <EditExpenseModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingExpense(null);
+        }}
+        onSubmit={handleSubmitExpense}
+        initialData={editingExpense}
       />
 
       <ToastContainer

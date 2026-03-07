@@ -45,7 +45,7 @@ function ExpenseTable({ expenses, onDelete, onEdit }) {
           month: "2-digit",
           year: "numeric",
         });
-        return `(${dayName}), ${formattedDate}`;
+        return `${dayName}, ${formattedDate}`;
       },
     },
     {
