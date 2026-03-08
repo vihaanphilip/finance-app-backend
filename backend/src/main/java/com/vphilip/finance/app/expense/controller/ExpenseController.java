@@ -60,4 +60,11 @@ public class ExpenseController {
 
         return expenseRepository.save(updatedExpense);
     }
+
+    @DeleteMapping("/{id}")
+    public Expense delete(@PathVariable Long id) {
+        Expense existingExpense = expenseRepository.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+        expenseRepository.deleteById(id);
+        return existingExpense;
+    }
 }
