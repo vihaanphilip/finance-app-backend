@@ -19,7 +19,7 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
                    a.name as account_label,
                    e.description,
                    e.amount,
-                   e.earning_type_id,
+                   ec.earning_type_id,
                    et.label as earning_type_label,
                    e.earning_category_id,
                    ec.label as earning_category_label,
@@ -28,8 +28,8 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
                    e.last_modified_at
             FROM earning e
             LEFT JOIN account a ON e.account_id = a.id
-            LEFT JOIN earning_type et ON e.earning_type_id = et.id
             LEFT JOIN earning_category ec ON e.earning_category_id = ec.id
+            LEFT JOIN earning_type et ON et.id = ec.earning_type_id
             ORDER BY e.id DESC
             """)
     List<EarningDTO> findAllWithLabels();

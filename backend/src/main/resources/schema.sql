@@ -20,6 +20,15 @@
 --ALTER TABLE earning
 --ADD COLUMN transaction_date DATE NOT NULL DEFAULT CURRENT_DATE;
 
+-- 12/10/2025 - Remove earning_type_id column to earning table
+--BEGIN;
+-- Drop FK (adjust constraint name if yours differs)
+--ALTER TABLE earning DROP CONSTRAINT IF EXISTS earning_earning_type_id_fkey;
+-- Drop the column
+--ALTER TABLE earning DROP COLUMN IF EXISTS earning_type_id;
+--COMMIT;
+
+
 
 CREATE TABLE IF NOT EXISTS account_type (
     id BIGINT PRIMARY KEY,
@@ -55,7 +64,6 @@ CREATE TABLE IF NOT EXISTS earning (
     account_id BIGINT NOT NULL,
     description VARCHAR(2000) NOT NULL,
     amount DECIMAL(19,2) NOT NULL,
-    earning_type_id BIGINT NOT NULL,
     earning_category_id BIGINT NOT NULL,
     transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
     created_at TIMESTAMP NOT NULL,
