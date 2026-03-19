@@ -38,4 +38,15 @@ public class ExpenseTypeController {
         }
         return expenseType.get();
     }
+
+    @PostMapping("/{id}")
+    ExpenseType updateExpenseType(@RequestBody ExpenseType expenseType, @PathVariable Long id) {
+        if(!id.equals(expenseType.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ExpenseType IDs don't match");
+        }
+        if(!expenseTypeRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ExpenseType not found");
+        }
+        return expenseTypeRepository.save(expenseType);
+    }
 }
