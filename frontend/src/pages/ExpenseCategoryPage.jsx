@@ -63,8 +63,8 @@ function ExpenseCategoryPage() {
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             transition: "background-color 0.3s ease",
           }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#c82333")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#dc3545")}
         >
           Create Expense Category
         </button>
