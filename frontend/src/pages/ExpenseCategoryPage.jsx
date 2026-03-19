@@ -6,7 +6,7 @@ import {
   createExpenseCategory,
 } from "../api/ExpenseCategoryApi";
 import ExpenseCategoryTable from "../components/tables/ExpenseCategory";
-import AddExpenseCategoryModal from "../components/forms/AddExpenseCategoryModal";
+import EditExpenseCategoryModal from "../components/forms/EditExpenseCategoryModal";
 
 function ExpenseCategoryPage() {
   const [expenseCategories, setExpenseCategories] = useState([]);
@@ -72,7 +72,7 @@ function ExpenseCategoryPage() {
 
       <ExpenseCategoryTable expenseCategories={expenseCategories} />
 
-      <AddExpenseCategoryModal
+      <EditExpenseCategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddExpenseCategory}

@@ -2,14 +2,33 @@ import React, { useState, useEffect } from "react";
 import { getExpenseTypes } from "../../api/ExpenseTypeApi";
 import EditModal from "../common/EditModal";
 
-function AddExpenseCategoryModal({ isOpen, onClose, onSubmit }) {
+function EditExpenseCategoryModal({ isOpen, onClose, onSubmit, initialData }) {
   const [formData, setFormData] = useState({
+    id: "",
     label: "",
     description: "",
     expense_type_id: "",
   });
 
   const [expenseTypes, setExpenseTypes] = useState([]);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        id: initialData.id || "",
+        label: initialData.label || "",
+        description: initialData.description || "",
+        expense_type_id: initialData.expense_type_id || "",
+      });
+    } else {
+      setFormData({
+        id: "",
+        label: "",
+        description: "",
+        expense_type_id: "",
+      });
+    }
+  }, [initialData, isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -36,11 +55,11 @@ function AddExpenseCategoryModal({ isOpen, onClose, onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
-    setFormData({ label: "", description: "", expense_type_id: "" });
+    setFormData({ id: "", label: "", description: "", expense_type_id: "" });
   };
 
   const handleClose = () => {
-    setFormData({ label: "", description: "", expense_type_id: "" });
+    setFormData({ id: "", label: "", description: "", expense_type_id: "" });
     onClose();
   };
 
@@ -48,9 +67,37 @@ function AddExpenseCategoryModal({ isOpen, onClose, onSubmit }) {
     <EditModal
       isOpen={isOpen}
       onClose={handleClose}
-      title="Create New Expense Category"
+      title={
+        initialData ? "Edit Expense Category" : "Create New Expense Category"
+      }
     >
       <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "15px" }}>
+          <label
+            style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}
+          >
+            ID
+          </label>
+          <input
+            type="number"
+            name="id"
+            value={formData.id}
+            onChange={handleInputChange}
+            required
+            disabled={!!initialData}
+            style={{
+              width: "100%",
+              padding: "8px 12px",
+              border: "1px solid #ced4da",
+              borderRadius: "4px",
+              fontSize: "14px",
+              boxSizing: "border-box",
+              backgroundColor: initialData ? "#e9ecef" : "white",
+              cursor: initialData ? "not-allowed" : "text",
+            }}
+          />
+        </div>
+
         <div style={{ marginBottom: "15px" }}>
           <label
             style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}
@@ -168,7 +215,7 @@ function AddExpenseCategoryModal({ isOpen, onClose, onSubmit }) {
               cursor: "pointer",
             }}
           >
-            Submit
+            {initialData ? "Update" : "Submit"}
           </button>
         </div>
       </form>
@@ -176,4 +223,4 @@ function AddExpenseCategoryModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
-export default AddExpenseCategoryModal;
+export default EditExpenseCategoryModal;
