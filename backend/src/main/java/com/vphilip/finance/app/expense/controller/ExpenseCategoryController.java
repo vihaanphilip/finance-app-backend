@@ -2,6 +2,7 @@ package com.vphilip.finance.app.expense.controller;
 
 import com.vphilip.finance.app.expense.model.ExpenseCategory;
 import com.vphilip.finance.app.expense.repository.ExpenseCategoryRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,13 @@ public class ExpenseCategoryController {
     @GetMapping("")
     public Object getExpenseCategories() {
         return expenseCategoryRepository.findAllWithType();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    ExpenseCategory createExpenseCategory(@RequestBody ExpenseCategory expenseCategory) {
+        expenseCategoryRepository.insert(expenseCategory);
+        return expenseCategory;
     }
 
     @PutMapping("/{id}")

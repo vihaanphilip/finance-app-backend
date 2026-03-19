@@ -5,7 +5,7 @@ import {
   getExpenseCategories,
   createExpenseCategory,
 } from "../api/ExpenseCategoryApi";
-import ExpenseCategoryTable from "../components/tables/ExpenseCategory";
+import ExpenseCategoryTable from "../components/tables/ExpenseCategoryTable";
 import EditExpenseCategoryModal from "../components/forms/EditExpenseCategoryModal";
 
 function ExpenseCategoryPage() {
@@ -50,7 +50,7 @@ function ExpenseCategoryPage() {
         <button
           onClick={() => setIsModalOpen(true)}
           style={{
-            backgroundColor: "#007bff",
+            backgroundColor: "#dc3545",
             color: "white",
             border: "none",
             borderRadius: "4px",

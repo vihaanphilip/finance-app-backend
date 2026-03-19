@@ -93,7 +93,10 @@ function ExpenseTypePage() {
             borderRadius: "4px",
             cursor: "pointer",
             fontSize: "14px",
+            transition: "background-color 0.3s ease",
           }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#c82333")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#dc3545")}
         >
           Add Expense Type
         </button>
