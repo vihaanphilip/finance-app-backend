@@ -31,6 +31,5 @@ public class ExpenseCategoryController {
                 expenseCategory.description()
         );
         return expenseCategoryRepository.save(updatedCategory);
-
     }
 }

@@ -12,6 +12,7 @@ import EarningPage from "./pages/EarningPage";
 import EarningSummary from "./pages/EarningSummary";
 import ExpensePage from "./pages/ExpensePage";
 import ExpenseTypePage from "./pages/ExpenseTypePage";
+import ExpenseCategoryPage from "./pages/ExpenseCategoryPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/earningsummary" element={<EarningSummary />} />
           <Route path="/expenses" element={<ExpensePage />} />
           <Route path="/expensetypes" element={<ExpenseTypePage />} />
+          <Route path="/expensecategories" element={<ExpenseCategoryPage />} />
         </Routes>
       </Layout>
     </Router>
