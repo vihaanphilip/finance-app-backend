@@ -2,9 +2,8 @@ package com.vphilip.finance.app.expense.controller;
 
 import com.vphilip.finance.app.expense.model.ExpenseType;
 import com.vphilip.finance.app.expense.repository.ExpenseTypeRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,4 +18,11 @@ public class ExpenseTypeController {
 
     @GetMapping("")
     List<ExpenseType> getExpenseTypes() { return expenseTypeRepository.findAll(); }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    ExpenseType createExpenseType(@RequestBody ExpenseType expenseType) {
+        expenseTypeRepository.insert(expenseType);
+        return expenseType;
+    }
 }
