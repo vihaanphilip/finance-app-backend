@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   getExpenseCategories,
   createExpenseCategory,
+  updateExpenseCategory,
   deleteExpenseCategory,
 } from "../api/ExpenseCategoryApi";
 import ExpenseCategoryTable from "../components/tables/ExpenseCategoryTable";
@@ -12,6 +13,7 @@ import EditExpenseCategoryModal from "../components/forms/EditExpenseCategoryMod
 function ExpenseCategoryPage() {
   const [expenseCategories, setExpenseCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingExpenseCategory, setEditingExpenseCategory] = useState(null);
 
   useEffect(() => {
     getExpenseCategories()
@@ -31,20 +33,31 @@ function ExpenseCategoryPage() {
     }
   };
 
-  const handleAddExpenseCategory = async (categoryData) => {
+  const handleSubmitExpenseCategory = async (categoryData) => {
     try {
-      const newCategory = await createExpenseCategory(categoryData);
-      console.log("Expense category created:", newCategory);
-
-      toast.success("Expense category created successfully!");
+      if (editingExpenseCategory) {
+        const updatedCategory = await updateExpenseCategory(categoryData.id, categoryData);
+        console.log("Expense category updated:", updatedCategory);
+        toast.success("Expense category updated successfully!");
+      } else {
+        const newCategory = await createExpenseCategory(categoryData);
+        console.log("Expense category created:", newCategory);
+        toast.success("Expense category created successfully!");
+      }
 
       const updatedCategories = await getExpenseCategories();
       setExpenseCategories(updatedCategories);
+      setEditingExpenseCategory(null);
       setIsModalOpen(false);
     } catch (error) {
-      console.error("Error creating expense category:", error);
-      toast.error("Error creating expense category. Please try again.");
+      console.error("Error saving expense category:", error);
+      toast.error("Error saving expense category. Please try again.");
     }
+  };
+
+  const handleEditExpenseCategory = (category) => {
+    setEditingExpenseCategory(category);
+    setIsModalOpen(true);
   };
 
   return (
@@ -61,7 +74,10 @@ function ExpenseCategoryPage() {
       >
         <h1 style={{ margin: 0, color: "#212529" }}>Expense Categories</h1>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            setEditingExpenseCategory(null);
+            setIsModalOpen(true);
+          }}
           style={{
             backgroundColor: "#dc3545",
             color: "white",
@@ -83,12 +99,20 @@ function ExpenseCategoryPage() {
         </button>
       </div>
 
-      <ExpenseCategoryTable expenseCategories={expenseCategories} onDelete={handleDeleteExpenseCategory} />
+      <ExpenseCategoryTable
+        expenseCategories={expenseCategories}
+        onDelete={handleDeleteExpenseCategory}
+        onEdit={handleEditExpenseCategory}
+      />
 
       <EditExpenseCategoryModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAddExpenseCategory}
+        onClose={() => {
+          setEditingExpenseCategory(null);
+          setIsModalOpen(false);
+        }}
+        onSubmit={handleSubmitExpenseCategory}
+        initialData={editingExpenseCategory}
       />
 
       <ToastContainer

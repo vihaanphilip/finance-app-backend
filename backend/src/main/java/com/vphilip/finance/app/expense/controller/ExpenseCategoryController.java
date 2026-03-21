@@ -53,4 +53,16 @@ public class ExpenseCategoryController {
         }
         return expenseCategory.get();
     }
+
+    @PostMapping("/{id}")
+    ExpenseCategory updateExpenseCategoryId(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory) {
+        if (!id.equals(expenseCategory.getId())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        }
+        if (expenseCategoryRepository.existsById(id)) {
+            return expenseCategoryRepository.save(expenseCategory);
+        } else  {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        }
+    }
 }
