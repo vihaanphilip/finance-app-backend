@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   getExpenseCategories,
   createExpenseCategory,
+  deleteExpenseCategory,
 } from "../api/ExpenseCategoryApi";
 import ExpenseCategoryTable from "../components/tables/ExpenseCategoryTable";
 import EditExpenseCategoryModal from "../components/forms/EditExpenseCategoryModal";
@@ -17,6 +18,18 @@ function ExpenseCategoryPage() {
       .then((data) => setExpenseCategories(data))
       .catch((err) => console.error("Error fetching expense categories", err));
   }, []);
+
+  const handleDeleteExpenseCategory = async (id) => {
+    try {
+      await deleteExpenseCategory(id);
+      toast.success("Expense category deleted successfully!");
+      const updatedCategories = await getExpenseCategories();
+      setExpenseCategories(updatedCategories);
+    } catch (error) {
+      console.error("Error deleting expense category:", error);
+      toast.error("Error deleting expense category. Please try again.");
+    }
+  };
 
   const handleAddExpenseCategory = async (categoryData) => {
     try {
@@ -70,7 +83,7 @@ function ExpenseCategoryPage() {
         </button>
       </div>
 
-      <ExpenseCategoryTable expenseCategories={expenseCategories} />
+      <ExpenseCategoryTable expenseCategories={expenseCategories} onDelete={handleDeleteExpenseCategory} />
 
       <EditExpenseCategoryModal
         isOpen={isModalOpen}

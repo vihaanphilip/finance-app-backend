@@ -5,6 +5,8 @@ import com.vphilip.finance.app.expense.repository.ExpenseCategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/expensecategories")
 public class ExpenseCategoryController {
@@ -39,5 +41,16 @@ public class ExpenseCategoryController {
                 expenseCategory.description()
         );
         return expenseCategoryRepository.save(updatedCategory);
+    }
+
+    @DeleteMapping("/{id}")
+    ExpenseCategory deleteExpenseCategory(@PathVariable Long id) {
+        Optional<ExpenseCategory> expenseCategory = expenseCategoryRepository.findById(id);
+        if (expenseCategory.isPresent()) {
+            expenseCategoryRepository.deleteById(id);
+        } else {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        }
+        return expenseCategory.get();
     }
 }
