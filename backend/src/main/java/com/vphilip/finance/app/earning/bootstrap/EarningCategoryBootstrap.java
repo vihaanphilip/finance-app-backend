@@ -17,7 +17,7 @@ import java.io.InputStream;
 @Component
 public class EarningCategoryBootstrap implements CommandLineRunner {
 
-    @Value("${app.bootstrap-data:false}")
+    @Value("${app.bootstrap-earnings-data:false}")
     private boolean bootstrapEnabled;
 
     private static final Logger log = LoggerFactory.getLogger(EarningCategoryBootstrap.class);

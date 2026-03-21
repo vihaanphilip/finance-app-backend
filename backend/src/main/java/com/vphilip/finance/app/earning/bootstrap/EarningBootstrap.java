@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Component
 public class EarningBootstrap implements CommandLineRunner {
 
-    @Value("${app.bootstrap-transaction-data:false}")
+    @Value("${app.bootstrap-earnings-data:false}")
     private boolean bootstrapEnabled;
 
     private static final Logger log = LoggerFactory.getLogger(EarningBootstrap.class);
