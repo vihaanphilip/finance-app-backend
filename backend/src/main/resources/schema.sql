@@ -28,8 +28,6 @@
 --ALTER TABLE earning DROP COLUMN IF EXISTS earning_type_id;
 --COMMIT;
 
-
-
 CREATE TABLE IF NOT EXISTS account_type (
     id BIGINT PRIMARY KEY,
     label VARCHAR(500) NOT NULL,
@@ -52,7 +50,7 @@ CREATE TABLE IF NOT EXISTS earning_type (
 
 ---- 12/10/2025 - Adding earning_category table
 CREATE TABLE IF NOT EXISTS earning_category (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     label VARCHAR(500) NOT NULL,
     description VARCHAR(2000) NOT NULL,
     earning_type_id BIGINT NOT NULL
@@ -69,7 +67,6 @@ CREATE TABLE IF NOT EXISTS earning (
     created_at TIMESTAMP NOT NULL,
     last_modified_at TIMESTAMP NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(id),
-    FOREIGN KEY (earning_type_id) REFERENCES earning_type(id),
     FOREIGN KEY (earning_category_id) REFERENCES earning_category(id)
 );
 
