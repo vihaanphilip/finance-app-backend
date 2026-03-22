@@ -1,10 +1,10 @@
 package com.vphilip.finance.app.transfer.controller;
 
 import com.vphilip.finance.app.transfer.dto.TransferCategoryDTO;
+import com.vphilip.finance.app.transfer.model.TransferCategory;
 import com.vphilip.finance.app.transfer.repository.TransferCategoryRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/transfercategories")
@@ -20,5 +20,10 @@ public class TransferCategoryController {
         return transferCategoryRepository.findAllWithType();
     }
 
-
+    @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
+    @PostMapping("")
+    TransferCategory createTransferCategory(@RequestBody TransferCategory  transferCategory) {
+        transferCategoryRepository.insert(transferCategory);
+        return transferCategory;
+    }
 }
