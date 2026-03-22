@@ -39,4 +39,14 @@ public class TransferTypeController {
         return transferType.get();
     }
 
+    @PostMapping("/{id}")
+    TransferType updateTransferType(@RequestBody TransferType transferType, @PathVariable Long id) {
+        if(!id.equals(transferType.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer Type IDs don't match");
+        }
+        if(!transferTypeRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transfer Type Not Found");
+        }
+        return transferTypeRepository.save(transferType);
+     }
 }
