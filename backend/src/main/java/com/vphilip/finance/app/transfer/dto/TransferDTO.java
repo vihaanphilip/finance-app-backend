@@ -3,7 +3,9 @@ package com.vphilip.finance.app.transfer.dto;
 public record TransferDTO(
     Long id,
     Long from_account_id,
+    String from_account_label,
     Long to_account_id,
+    String to_account_label,
     String description,
     java.math.BigDecimal amount,
     Long transfer_type_id,
