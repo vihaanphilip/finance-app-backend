@@ -18,6 +18,11 @@ function HomePage() {
     navigate("/expenses");
   };
 
+  // Handler to navigate to Transfers page
+  const handleGoToTransfers = () => {
+    navigate("/transfers");
+  };
+
   return (
     <div
       style={{
@@ -95,6 +100,25 @@ function HomePage() {
           onMouseOut={(e) => (e.target.style.backgroundColor = "#dc3545")}
         >
           View Expenses
+        </button>
+        {/* Button to navigate to Transfers page */}
+        <button
+          onClick={handleGoToTransfers}
+          style={{
+            padding: "15px 30px",
+            fontSize: "1.2em",
+            backgroundColor: "#ffc107",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#e0a800")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#ffc107")}
+        >
+          View Transfers
         </button>
       </div>
     </div>
