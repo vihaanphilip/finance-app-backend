@@ -98,3 +98,35 @@ CREATE TABLE IF NOT EXISTS expense (
     FOREIGN KEY (account_id) REFERENCES account(id),
     FOREIGN KEY (expense_category_id) REFERENCES expense_category(id)
 );
+
+-- 22/02/2026 - Add transfer type table
+CREATE TABLE IF NOT EXISTS transfer_type (
+    id BIGINT PRIMARY KEY,
+    label VARCHAR(500) NOT NULL,
+    description VARCHAR(2000) NOT NULL
+);
+
+-- 22/02/2026 - Add transfer category table
+CREATE TABLE IF NOT EXISTS transfer_category (
+    id BIGINT PRIMARY KEY,
+    label VARCHAR(500) NOT NULL,
+    description VARCHAR(2000) NOT NULL,
+    transfer_type_id BIGINT NOT NULL,
+    FOREIGN KEY (transfer_type_id) REFERENCES transfer_type(id)
+);
+
+-- 22/02/2026 - Add transfer table
+CREATE TABLE IF NOT EXISTS transfer (
+    id BIGSERIAL PRIMARY KEY,
+    from_account_id BIGINT NOT NULL,
+    to_account_id BIGINT NOT NULL,
+    description VARCHAR(2000) NOT NULL,
+    amount DECIMAL(19,2) NOT NULL,
+    transfer_category_id BIGINT NOT NULL,
+    transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    created_at TIMESTAMPTZ NOT NULL,
+    last_modified_at TIMESTAMPTZ NOT NULL,
+    FOREIGN KEY (from_account_id) REFERENCES account(id),
+    FOREIGN KEY (to_account_id) REFERENCES account(id),
+    FOREIGN KEY (transfer_category_id) REFERENCES transfer_category(id)
+);

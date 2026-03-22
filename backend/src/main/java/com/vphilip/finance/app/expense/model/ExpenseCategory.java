@@ -1,7 +1,9 @@
 package com.vphilip.finance.app.expense.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+@Table("expense_category")
 public record ExpenseCategory(
         @Id
         Long id,

@@ -1,7 +1,9 @@
 package com.vphilip.finance.app.account.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+@Table("account")
 public record Account(
     @Id
     Long id,
