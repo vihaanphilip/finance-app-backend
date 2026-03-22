@@ -15,6 +15,7 @@ import ExpenseTypePage from "./pages/ExpenseTypePage";
 import ExpenseCategoryPage from "./pages/ExpenseCategoryPage";
 import TransfersPage from "./pages/TransfersPage";
 import TransferTypePage from "./pages/TransferTypePage";
+import TransferCategoryPage from "./pages/TransferCategoryPage";
 
 function App() {
   return (
@@ -45,6 +46,10 @@ function App() {
           <Route path="/expensecategories" element={<ExpenseCategoryPage />} />
           <Route path="/transfers" element={<TransfersPage />} />
           <Route path="/transfertypes" element={<TransferTypePage />} />
+          <Route
+            path="/transfercategories"
+            element={<TransferCategoryPage />}
+          />
         </Routes>
       </Layout>
     </Router>

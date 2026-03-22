@@ -39,6 +39,27 @@ function TransfersPage() {
           >
             Transfer Types
           </button>
+          <button
+            onClick={() => navigate("/transfercategories")}
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "#ffc107",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontSize: "14px",
+              lineHeight: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#e0a800")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#ffc107")}
+          >
+            Transfer Categories
+          </button>
         </div>
       </div>
 
