@@ -14,7 +14,7 @@ export const createTransferCategory = async (transferCategory) => {
 };
 
 export const updateTransferCategory = async (id, transferCategory) => {
-  const response = await axios.put(`${API_URL}/${id}`, transferCategory);
+  const response = await axios.post(`${API_URL}/${id}`, transferCategory);
   return response.data;
 };
 

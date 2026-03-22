@@ -39,4 +39,16 @@ public class TransferCategoryController {
         }
         return transferCategory.get();
     }
+
+    @PostMapping("/{id}")
+    TransferCategory updateTransferCategory(@PathVariable Long id, @RequestBody TransferCategory transferCategory) {
+        if(!id.equals(transferCategory.getId())) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST);
+        }
+        if (transferCategoryRepository.findById(id).isPresent()) {
+            return transferCategoryRepository.save(transferCategory);
+        } else  {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        }
+    }
 }
