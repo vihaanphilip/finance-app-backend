@@ -45,4 +45,26 @@ public class TransferController {
         transferRepository.delete(existingTransfer);
         return existingTransfer;
     }
+
+    @PostMapping("/{id}")
+    public Transfer update(@PathVariable Long id, @RequestBody Transfer transfer) {
+        if (!transferRepository.existsById(id)) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        }
+
+        Transfer existingTransfer = transferRepository.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+
+        Transfer updatedTransfer = new Transfer(
+            id,
+            transfer.from_account_id(),
+            transfer.to_account_id(),
+            transfer.description(),
+            transfer.amount(),
+            transfer.transfer_category_id(),
+            transfer.transaction_date(),
+            existingTransfer.created_at(),  // Preserve original created_at
+            java.time.LocalDateTime.now()  // Update last_modified_at to current time
+        );
+        return transferRepository.save(updatedTransfer);
+    }
 }
