@@ -38,4 +38,11 @@ public class TransferController {
 
         return transferRepository.save(newTransfer);
     }
+
+    @DeleteMapping("/{id}")
+    public Transfer delete(@PathVariable Long id) {
+        Transfer existingTransfer = transferRepository.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+        transferRepository.delete(existingTransfer);
+        return existingTransfer;
+    }
 }
