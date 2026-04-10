@@ -34,3 +34,8 @@ build/
 
 # Ignore Postgres data
 postgres-data/
+
+# Ignore local info and agent config
+Info/
+.github/
+

@@ -3,3 +3,6 @@
 
 # Custom ignore folder
 IGNORETHIS/
+
+# Local agent customizations
+.github/
