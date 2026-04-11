@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/common/Layout";
@@ -9,7 +14,7 @@ import AccountPage from "./pages/AccountPage";
 import EarningTypePage from "./pages/EarningTypePage";
 import EarningCategoryPage from "./pages/EarningCategoryPage";
 import EarningPage from "./pages/EarningPage";
-import EarningSummary from "./pages/EarningSummary";
+import Summary from "./pages/Summary";
 import ExpensePage from "./pages/ExpensePage";
 import ExpenseTypePage from "./pages/ExpenseTypePage";
 import ExpenseCategoryPage from "./pages/ExpenseCategoryPage";
@@ -40,7 +45,11 @@ function App() {
           <Route path="/earningtypes" element={<EarningTypePage />} />
           <Route path="/earningcategories" element={<EarningCategoryPage />} />
           <Route path="/earnings" element={<EarningPage />} />
-          <Route path="/earningsummary" element={<EarningSummary />} />
+          <Route path="/summary" element={<Summary />} />
+          <Route
+            path="/earningsummary"
+            element={<Navigate to="/summary" replace />}
+          />
           <Route path="/expenses" element={<ExpensePage />} />
           <Route path="/expensetypes" element={<ExpenseTypePage />} />
           <Route path="/expensecategories" element={<ExpenseCategoryPage />} />

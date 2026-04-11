@@ -23,6 +23,11 @@ function HomePage() {
     navigate("/transfers");
   };
 
+  // Handler to navigate to Summary page
+  const handleGoToSummary = () => {
+    navigate("/summary");
+  };
+
   return (
     <div
       style={{
@@ -119,6 +124,24 @@ function HomePage() {
           onMouseOut={(e) => (e.target.style.backgroundColor = "#ffc107")}
         >
           View Transfers
+        </button>
+        <button
+          onClick={handleGoToSummary}
+          style={{
+            padding: "15px 30px",
+            fontSize: "1.2em",
+            backgroundColor: "#17a2b8",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#138496")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#17a2b8")}
+        >
+          View Summary
         </button>
       </div>
     </div>

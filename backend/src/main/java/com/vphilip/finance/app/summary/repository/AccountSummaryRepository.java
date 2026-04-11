@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AccountSummaryRepository extends ListCrudRepository<Account, Long> {
-
     @Query("""
             WITH earnings_before AS (
                 SELECT e.account_id,
@@ -60,4 +59,3 @@ public interface AccountSummaryRepository extends ListCrudRepository<Account, Lo
             @Param("end_date") LocalDate endDate
     );
 }
-
