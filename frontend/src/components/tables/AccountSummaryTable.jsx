@@ -30,6 +30,16 @@ function AccountSummaryTable({ accountSummaryData }) {
       render: (value) => formatCurrency(value),
     },
     {
+      key: "transfers_in_amount",
+      title: "Transfers In",
+      render: (value) => formatCurrency(value),
+    },
+    {
+      key: "transfers_out_amount",
+      title: "Transfers Out",
+      render: (value) => formatCurrency(value),
+    },
+    {
       key: "balance_amount",
       title: "Balance",
       render: (value) => formatCurrency(value),

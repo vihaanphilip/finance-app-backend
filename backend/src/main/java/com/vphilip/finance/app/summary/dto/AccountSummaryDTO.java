@@ -8,6 +8,8 @@ public record AccountSummaryDTO(
         BigDecimal starting_amount,
         BigDecimal balance_amount,
         BigDecimal earnings_amount,
-        BigDecimal expenses_amount
+        BigDecimal expenses_amount,
+        BigDecimal transfers_in_amount,
+        BigDecimal transfers_out_amount
 ) {
 }
