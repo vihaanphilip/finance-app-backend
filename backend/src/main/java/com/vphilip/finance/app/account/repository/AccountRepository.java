@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AccountRepository extends ListCrudRepository<Account, Integer> {
     @Query("""
-        SELECT a.id, a.name, a.description, a.account_type_id, at.label as account_type_label
+        SELECT a.id, a.name, a.description, a.account_type_id, at.label as account_type_label, a.starting_amount
         FROM account a
         LEFT JOIN account_type at ON a.account_type_id = at.id
         ORDER BY a.id

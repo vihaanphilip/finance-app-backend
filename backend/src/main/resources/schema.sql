@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS account (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(500) NOT NULL,
     description VARCHAR(2000) NOT NULL,
-    account_type_id BIGINT NOT NULL
+    account_type_id BIGINT NOT NULL,
+    starting_amount DECIMAL(19,2) NOT NULL DEFAULT 0.00
 );
 
 -- 12/10/2025 - Adding earning_type table
@@ -130,3 +131,6 @@ CREATE TABLE IF NOT EXISTS transfer (
     FOREIGN KEY (to_account_id) REFERENCES account(id),
     FOREIGN KEY (transfer_category_id) REFERENCES transfer_category(id)
 );
+
+-- 18/04/2026 - Add starting_amount column to account table
+ALTER TABLE account ADD COLUMN IF NOT EXISTS starting_amount DECIMAL(19,2) NOT NULL DEFAULT 0.00;

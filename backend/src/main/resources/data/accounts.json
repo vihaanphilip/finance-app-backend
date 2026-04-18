@@ -4,13 +4,15 @@
       "id": 1,
       "name": "Maybank",
       "description": "The primary hub for all daily and transactional finances.",
-      "account_type_id": 1
+      "account_type_id": 1,
+      "starting_amount": 0.00
     },
     {
       "id": 2,
       "name": "HSBC",
       "description": "The designated vault for wealth accumulation, financial goals, and emergency funds.",
-      "account_type_id": 3
+      "account_type_id": 3,
+      "starting_amount": 0.00
     }
   ]
 }
