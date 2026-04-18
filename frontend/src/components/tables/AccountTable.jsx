@@ -1,9 +1,10 @@
 import React from "react";
 import DataTable from "../common/DataTable";
+import { FaPencilAlt } from "react-icons/fa";
 
 const formatCurrency = (value) => `RM ${Number(value || 0).toFixed(2)}`;
 
-function AccountTable({ accounts }) {
+function AccountTable({ accounts, onEdit }) {
   const columns = [
     {
       key: "id",
@@ -26,6 +27,24 @@ function AccountTable({ accounts }) {
       key: "starting_amount",
       title: "Starting Amount",
       render: (value) => formatCurrency(value),
+    },
+    {
+      key: "actions",
+      title: "",
+      render: (_, row) => (
+        <button
+          onClick={() => onEdit(row)}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#007bff",
+            cursor: "pointer",
+            padding: "5px",
+          }}
+        >
+          <FaPencilAlt />
+        </button>
+      ),
     },
   ];
 

@@ -2,37 +2,49 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getAccounts, createAccount } from "../api/AccountApi";
+import { getAccounts, createAccount, updateAccount } from "../api/AccountApi";
 import AccountTable from "../components/tables/AccountTable";
 import EditAccountModal from "../components/forms/EditAccountModal";
 
 function AccountPage() {
   const [accounts, setAccounts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingAccount, setEditingAccount] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    loadAccounts();
+  }, []);
+
+  const loadAccounts = () => {
     getAccounts()
       .then((data) => setAccounts(data))
       .catch((err) => console.error("Error fetching accounts", err));
-  }, []);
+  };
 
-  const handleAddAccount = async (accountData) => {
+  const handleSubmitAccount = async (accountData) => {
     try {
-      const newAccount = await createAccount(accountData);
-      console.log("Account created:", newAccount);
+      if (editingAccount) {
+        await updateAccount(editingAccount.id, accountData);
+        toast.success("Account updated successfully!");
+      } else {
+        const newAccount = await createAccount(accountData);
+        console.log("Account created:", newAccount);
+        toast.success("Account created successfully!");
+      }
 
-      // Show success toast
-      toast.success("Account created successfully!");
-
-      // Refresh the accounts list
-      const updatedAccounts = await getAccounts();
-      setAccounts(updatedAccounts);
+      loadAccounts();
       setIsModalOpen(false);
+      setEditingAccount(null);
     } catch (error) {
-      console.error("Error creating account:", error);
-      toast.error("Error creating account. Please try again.");
+      console.error("Error saving account:", error);
+      toast.error("Error saving account. Please try again.");
     }
+  };
+
+  const handleEditAccount = (account) => {
+    setEditingAccount(account);
+    setIsModalOpen(true);
   };
 
   return (
@@ -71,7 +83,10 @@ function AccountPage() {
             View Account Types
           </button>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setEditingAccount(null);
+              setIsModalOpen(true);
+            }}
             style={{
               backgroundColor: "#007bff",
               color: "white",
@@ -94,12 +109,16 @@ function AccountPage() {
         </div>
       </div>
 
-      <AccountTable accounts={accounts} />
+      <AccountTable accounts={accounts} onEdit={handleEditAccount} />
 
       <EditAccountModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleAddAccount}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingAccount(null);
+        }}
+        onSubmit={handleSubmitAccount}
+        initialData={editingAccount}
       />
 
       <ToastContainer

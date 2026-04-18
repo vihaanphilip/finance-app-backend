@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import { getAccountTypes } from "../../api/AccountTypeApi";
 import EditModal from "../common/EditModal";
 
-function EditAccountModal({ isOpen, onClose, onSubmit }) {
+const getDefaultFormData = () => ({
+  name: "",
+  description: "",
+  starting_amount: "",
+  account_type_id: "",
+});
+
+function EditAccountModal({ isOpen, onClose, onSubmit, initialData }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -13,6 +20,17 @@ function EditAccountModal({ isOpen, onClose, onSubmit }) {
 
   useEffect(() => {
     if (isOpen) {
+      if (initialData) {
+        setFormData({
+          name: initialData.name || "",
+          description: initialData.description || "",
+          starting_amount: initialData.starting_amount ?? "",
+          account_type_id: initialData.account_type_id || "",
+        });
+      } else {
+        setFormData(getDefaultFormData());
+      }
+
       getAccountTypes()
         .then((data) => {
           console.log("Fetched account types:", data);
@@ -23,7 +41,7 @@ function EditAccountModal({ isOpen, onClose, onSubmit }) {
           setAccountTypes([]);
         });
     }
-  }, [isOpen]);
+  }, [initialData, isOpen]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,26 +57,20 @@ function EditAccountModal({ isOpen, onClose, onSubmit }) {
       ...formData,
       starting_amount: Number(formData.starting_amount),
     });
-    setFormData({
-      name: "",
-      description: "",
-      starting_amount: "",
-      account_type_id: "",
-    });
+    setFormData(getDefaultFormData());
   };
 
   const handleClose = () => {
-    setFormData({
-      name: "",
-      description: "",
-      starting_amount: "",
-      account_type_id: "",
-    });
+    setFormData(getDefaultFormData());
     onClose();
   };
 
   return (
-    <EditModal isOpen={isOpen} onClose={handleClose} title="Edit Account Modal">
+    <EditModal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title={initialData ? "Edit Account" : "Create Account"}
+    >
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "15px" }}>
           <label
@@ -206,7 +218,7 @@ function EditAccountModal({ isOpen, onClose, onSubmit }) {
               cursor: "pointer",
             }}
           >
-            Submit
+            {initialData ? "Save Changes" : "Submit"}
           </button>
         </div>
       </form>

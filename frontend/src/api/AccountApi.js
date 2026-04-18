@@ -12,3 +12,8 @@ export const createAccount = async (accountData) => {
   const response = await axios.post(API_URL, accountData);
   return response.data;
 };
+
+export const updateAccount = async (id, accountData) => {
+  const response = await axios.post(`${API_URL}/${id}`, accountData);
+  return response.data;
+};
