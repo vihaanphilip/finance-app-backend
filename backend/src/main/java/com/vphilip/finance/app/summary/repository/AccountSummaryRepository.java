@@ -70,9 +70,11 @@ public interface AccountSummaryRepository extends ListCrudRepository<Account, Lo
             SELECT
                 a.id                                                                      AS account_id,
                 a.name                                                                    AS account_name,
-                (COALESCE(eb.total, 0) - COALESCE(exb.total, 0)
+                (a.starting_amount
+                    + COALESCE(eb.total, 0) - COALESCE(exb.total, 0)
                     + COALESCE(tib.total, 0) - COALESCE(tob.total, 0))                   AS starting_amount,
-                (COALESCE(eb.total, 0) - COALESCE(exb.total, 0)
+                (a.starting_amount
+                    + COALESCE(eb.total, 0) - COALESCE(exb.total, 0)
                     + COALESCE(tib.total, 0) - COALESCE(tob.total, 0)
                     + COALESCE(eip.total, 0) - COALESCE(exip.total, 0)
                     + COALESCE(tip.total, 0) - COALESCE(top_.total, 0))                  AS balance_amount,
