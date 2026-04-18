@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccounts, createAccount } from "../api/AccountApi";
 import AccountTable from "../components/tables/AccountTable";
-import AddAccountModal from "../components/forms/AddAccountModal";
+import EditAccountModal from "../components/forms/EditAccountModal";
 
 function AccountPage() {
   const [accounts, setAccounts] = useState([]);
@@ -96,7 +96,7 @@ function AccountPage() {
 
       <AccountTable accounts={accounts} />
 
-      <AddAccountModal
+      <EditAccountModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddAccount}

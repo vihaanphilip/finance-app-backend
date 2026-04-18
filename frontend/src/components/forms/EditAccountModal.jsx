@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { getAccountTypes } from "../../api/AccountTypeApi";
 import EditModal from "../common/EditModal";
 
-function AddAccountModal({ isOpen, onClose, onSubmit }) {
+function EditAccountModal({ isOpen, onClose, onSubmit }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    starting_amount: "",
     account_type_id: "",
   });
   const [accountTypes, setAccountTypes] = useState([]);
@@ -34,17 +35,30 @@ function AddAccountModal({ isOpen, onClose, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
-    setFormData({ name: "", description: "", account_type_id: "" });
+    onSubmit({
+      ...formData,
+      starting_amount: Number(formData.starting_amount),
+    });
+    setFormData({
+      name: "",
+      description: "",
+      starting_amount: "",
+      account_type_id: "",
+    });
   };
 
   const handleClose = () => {
-    setFormData({ name: "", description: "", account_type_id: "" });
+    setFormData({
+      name: "",
+      description: "",
+      starting_amount: "",
+      account_type_id: "",
+    });
     onClose();
   };
 
   return (
-    <EditModal isOpen={isOpen} onClose={handleClose} title="Create New Account">
+    <EditModal isOpen={isOpen} onClose={handleClose} title="Edit Account Modal">
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "15px" }}>
           <label
@@ -131,6 +145,35 @@ function AddAccountModal({ isOpen, onClose, onSubmit }) {
           </select>
         </div>
 
+        <div style={{ marginBottom: "15px" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "5px",
+              fontWeight: "500",
+            }}
+          >
+            Starting Amount
+          </label>
+          <input
+            type="number"
+            name="starting_amount"
+            value={formData.starting_amount}
+            onChange={handleInputChange}
+            required
+            step="0.01"
+            placeholder="0.00"
+            style={{
+              width: "100%",
+              padding: "8px 12px",
+              border: "1px solid #ced4da",
+              borderRadius: "4px",
+              fontSize: "14px",
+              boxSizing: "border-box",
+            }}
+          />
+        </div>
+
         <div
           style={{
             display: "flex",
@@ -171,4 +214,4 @@ function AddAccountModal({ isOpen, onClose, onSubmit }) {
   );
 }
 
-export default AddAccountModal;
+export default EditAccountModal;
