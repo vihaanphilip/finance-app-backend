@@ -40,6 +40,21 @@ public class AccountController {
         accountRepository.save(account);
     }
 
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    Account updateAccount(@PathVariable Integer id, @RequestBody Account account) {
+        Account existing = accountRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+        Account updated = new Account(
+                existing.id(),
+                account.name(),
+                account.description(),
+                account.account_type_id(),
+                account.starting_amount()
+        );
+        return accountRepository.save(updated);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     Account deleteAccount(@PathVariable Integer id) {
