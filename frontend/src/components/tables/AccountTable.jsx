@@ -1,6 +1,8 @@
 import React from "react";
 import DataTable from "../common/DataTable";
 
+const formatCurrency = (value) => `RM ${Number(value || 0).toFixed(2)}`;
+
 function AccountTable({ accounts }) {
   const columns = [
     {
@@ -19,6 +21,11 @@ function AccountTable({ accounts }) {
     {
       key: "account_type_label",
       title: "Account Type",
+    },
+    {
+      key: "starting_amount",
+      title: "Starting Amount",
+      render: (value) => formatCurrency(value),
     },
   ];
 
