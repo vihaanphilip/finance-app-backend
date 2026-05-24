@@ -2,14 +2,13 @@ package com.vphilip.finance.app.summary.dto;
 
 import java.math.BigDecimal;
 
-public record AccountSummaryDTO(
-        Long account_id,
-        String account_name,
-        BigDecimal starting_amount,
-        BigDecimal balance_amount,
-        BigDecimal earnings_amount,
-        BigDecimal expenses_amount,
-        BigDecimal transfers_in_amount,
-        BigDecimal transfers_out_amount
-) {
+public interface AccountSummaryDTO {
+    Long getAccount_id();
+    String getAccount_name();
+    BigDecimal getStarting_amount();
+    BigDecimal getBalance_amount();
+    BigDecimal getEarnings_amount();
+    BigDecimal getExpenses_amount();
+    BigDecimal getTransfers_in_amount();
+    BigDecimal getTransfers_out_amount();
 }

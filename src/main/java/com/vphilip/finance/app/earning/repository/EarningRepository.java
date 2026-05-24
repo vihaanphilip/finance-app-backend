@@ -2,18 +2,14 @@ package com.vphilip.finance.app.earning.repository;
 
 import com.vphilip.finance.app.earning.dto.EarningDTO;
 import com.vphilip.finance.app.earning.model.Earning;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public interface EarningRepository extends ListCrudRepository<Earning, Long> {
-    // Inherits basic CRUD operations from ListCrudRepository
-    // The Long type parameter matches our id field type from the Earning record
+public interface EarningRepository extends JpaRepository<Earning, Long> {
 
-    @Query("""
+    @Query(value = """
             SELECT e.id,
                    e.account_id,
                    a.name as account_label,
@@ -31,6 +27,6 @@ public interface EarningRepository extends ListCrudRepository<Earning, Long> {
             LEFT JOIN earning_category ec ON e.earning_category_id = ec.id
             LEFT JOIN earning_type et ON et.id = ec.earning_type_id
             ORDER BY e.id DESC
-            """)
+            """, nativeQuery = true)
     List<EarningDTO> findAllWithLabels();
 }

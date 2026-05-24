@@ -43,20 +43,20 @@ public class EarningBootstrap implements CommandLineRunner {
             LocalDateTime now = LocalDateTime.now();
             for (Earning earning : allEarnings.earnings()) {
                 Earning earningWithTimestamps = new Earning(
-                        earning.id(),
-                        earning.account_id(),
-                        earning.description(),
-                        earning.amount(),
-                        earning.earning_type_id(),
-                        earning.earning_category_id(),
-                        earning.transaction_date(),
+                        earning.getId(),
+                        earning.getAccount_id(),
+                        earning.getDescription(),
+                        earning.getAmount(),
+                        earning.getEarning_type_id(),
+                        earning.getEarning_category_id(),
+                        earning.getTransaction_date(),
                         now,
                         now
                 );
                 log.info("Processing earning: description={}, amount={}",
-                        earningWithTimestamps.description(), earningWithTimestamps.amount());
+                        earningWithTimestamps.getDescription(), earningWithTimestamps.getAmount());
                 earningRepository.save(earningWithTimestamps);
-                log.info("Saved earning: {}", earningWithTimestamps.description());
+                log.info("Saved earning: {}", earningWithTimestamps.getDescription());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);

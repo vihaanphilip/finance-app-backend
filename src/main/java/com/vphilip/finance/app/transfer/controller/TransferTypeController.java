@@ -19,13 +19,14 @@ public class TransferTypeController {
     }
 
     @GetMapping("")
-    List<TransferType> getTransferTypes() { return transferTypeRepository.findAll(); }
+    List<TransferType> getTransferTypes() {
+        return transferTypeRepository.findAll();
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public TransferType create(@RequestBody TransferType transferType) {
-         transferTypeRepository.insert(transferType);
-         return transferType;
+        return transferTypeRepository.save(transferType);
     }
 
     @DeleteMapping("/{id}")
@@ -41,12 +42,12 @@ public class TransferTypeController {
 
     @PostMapping("/{id}")
     TransferType updateTransferType(@RequestBody TransferType transferType, @PathVariable Long id) {
-        if(!id.equals(transferType.getId())) {
+        if (!id.equals(transferType.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transfer Type IDs don't match");
         }
-        if(!transferTypeRepository.existsById(id)) {
+        if (!transferTypeRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transfer Type Not Found");
         }
         return transferTypeRepository.save(transferType);
-     }
+    }
 }

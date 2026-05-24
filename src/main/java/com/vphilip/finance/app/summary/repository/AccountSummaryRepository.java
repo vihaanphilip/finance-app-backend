@@ -2,15 +2,16 @@ package com.vphilip.finance.app.summary.repository;
 
 import com.vphilip.finance.app.account.model.Account;
 import com.vphilip.finance.app.summary.dto.AccountSummaryDTO;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface AccountSummaryRepository extends ListCrudRepository<Account, Long> {
-    @Query("""
+public interface AccountSummaryRepository extends JpaRepository<Account, Long> {
+
+    @Query(value = """
             WITH earnings_before AS (
                 SELECT e.account_id,
                        COALESCE(SUM(e.amount), 0)::numeric(19,2) AS total
@@ -92,7 +93,7 @@ public interface AccountSummaryRepository extends ListCrudRepository<Account, Lo
             LEFT JOIN transfers_in_period  tip   ON tip.account_id  = a.id
             LEFT JOIN transfers_out_period top_  ON top_.account_id = a.id
             ORDER BY a.id DESC
-            """)
+            """, nativeQuery = true)
     List<AccountSummaryDTO> findAccountSummaries(
             @Param("start_date") LocalDate startDate,
             @Param("end_date") LocalDate endDate

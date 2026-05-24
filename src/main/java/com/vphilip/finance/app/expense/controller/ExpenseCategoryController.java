@@ -4,6 +4,7 @@ import com.vphilip.finance.app.expense.model.ExpenseCategory;
 import com.vphilip.finance.app.expense.repository.ExpenseCategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -24,21 +25,19 @@ public class ExpenseCategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     ExpenseCategory createExpenseCategory(@RequestBody ExpenseCategory expenseCategory) {
-        expenseCategoryRepository.insert(expenseCategory);
-        return expenseCategory;
+        return expenseCategoryRepository.save(expenseCategory);
     }
 
     @PutMapping("/{id}")
     public Object updateExpenseCategory(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory) {
         if (!expenseCategoryRepository.existsById(id)) {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        // Create updated category with the ID from path
         ExpenseCategory updatedCategory = new ExpenseCategory(
                 id,
-                expenseCategory.expense_type_id(),
-                expenseCategory.label(),
-                expenseCategory.description()
+                expenseCategory.getExpenseTypeId(),
+                expenseCategory.getLabel(),
+                expenseCategory.getDescription()
         );
         return expenseCategoryRepository.save(updatedCategory);
     }
@@ -49,20 +48,20 @@ public class ExpenseCategoryController {
         if (expenseCategory.isPresent()) {
             expenseCategoryRepository.deleteById(id);
         } else {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return expenseCategory.get();
     }
 
     @PostMapping("/{id}")
-    ExpenseCategory updateExpenseCategoryId(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory) {
+    ExpenseCategory updateExpenseCategoryPost(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory) {
         if (!id.equals(expenseCategory.getId())) {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         if (expenseCategoryRepository.existsById(id)) {
             return expenseCategoryRepository.save(expenseCategory);
-        } else  {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 }

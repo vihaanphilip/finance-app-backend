@@ -36,8 +36,7 @@ public class EarningCategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     EarningCategory createEarningCategory(@RequestBody EarningCategory earningCategory) {
-        earningCategoryRepository.insert(earningCategory);
-        return earningCategory;
+        return earningCategoryRepository.save(earningCategory);
     }
 
     @PutMapping("/{id}")
@@ -45,12 +44,11 @@ public class EarningCategoryController {
         if (!earningCategoryRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        // Create updated category with the ID from path
         EarningCategory updatedCategory = new EarningCategory(
                 id,
-                earningCategory.earning_type_id(),
-                earningCategory.label(),
-                earningCategory.description()
+                earningCategory.getEarningTypeId(),
+                earningCategory.getLabel(),
+                earningCategory.getDescription()
         );
         return earningCategoryRepository.save(updatedCategory);
     }

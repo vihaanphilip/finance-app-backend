@@ -41,13 +41,8 @@ public class ExpenseTypeBootstrap implements CommandLineRunner {
             for (ExpenseType expenseType : allExpenseTypes.expenseTypes()) {
                 log.info("Processing expense type: id={}, label={}, description={}",
                         expenseType.getId(), expenseType.getLabel(), expenseType.getDescription());
-                if (!expenseTypeRepository.existsById(expenseType.getId())) {
-                    expenseTypeRepository.insert(expenseType);
-                    log.info("Inserted expense type with id {}", expenseType.getId());
-                } else {
-                    expenseTypeRepository.save(expenseType);
-                    log.info("Updated expense type with id {}", expenseType.getId());
-                }
+                expenseTypeRepository.save(expenseType);
+                log.info("Saved expense type with id {}", expenseType.getId());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);

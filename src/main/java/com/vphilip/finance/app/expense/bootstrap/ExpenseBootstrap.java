@@ -25,8 +25,7 @@ public class ExpenseBootstrap implements CommandLineRunner {
     private final ExpenseRepository expenseRepository;
     private final ObjectMapper objectMapper;
 
-    public ExpenseBootstrap(ExpenseRepository expenseRepository,
-                           ObjectMapper objectMapper) {
+    public ExpenseBootstrap(ExpenseRepository expenseRepository, ObjectMapper objectMapper) {
         this.expenseRepository = expenseRepository;
         this.objectMapper = objectMapper;
     }
@@ -45,20 +44,20 @@ public class ExpenseBootstrap implements CommandLineRunner {
             for (Expense expense : allExpenses.expenses()) {
                 Expense expenseWithTimestamps = new Expense(
                         null,
-                        expense.account_id(),
-                        expense.description(),
-                        expense.amount(),
-                        expense.expense_category_id(),
-                        expense.transaction_date(),
+                        expense.getAccount_id(),
+                        expense.getDescription(),
+                        expense.getAmount(),
+                        expense.getExpense_category_id(),
+                        expense.getTransaction_date(),
                         now,
                         now
                 );
                 log.info("Processing expense: description={}, amount={}, category_id={}",
-                        expenseWithTimestamps.description(),
-                        expenseWithTimestamps.amount(),
-                        expenseWithTimestamps.expense_category_id());
+                        expenseWithTimestamps.getDescription(),
+                        expenseWithTimestamps.getAmount(),
+                        expenseWithTimestamps.getExpense_category_id());
                 expenseRepository.save(expenseWithTimestamps);
-                log.info("Saved expense: {}", expenseWithTimestamps.description());
+                log.info("Saved expense: {}", expenseWithTimestamps.getDescription());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);

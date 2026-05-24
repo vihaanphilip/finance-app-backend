@@ -19,13 +19,14 @@ public class ExpenseTypeController {
     }
 
     @GetMapping("")
-    List<ExpenseType> getExpenseTypes() { return expenseTypeRepository.findAll(); }
+    List<ExpenseType> getExpenseTypes() {
+        return expenseTypeRepository.findAll();
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     ExpenseType createExpenseType(@RequestBody ExpenseType expenseType) {
-        expenseTypeRepository.insert(expenseType);
-        return expenseType;
+        return expenseTypeRepository.save(expenseType);
     }
 
     @DeleteMapping("/{id}")
@@ -41,10 +42,10 @@ public class ExpenseTypeController {
 
     @PostMapping("/{id}")
     ExpenseType updateExpenseType(@RequestBody ExpenseType expenseType, @PathVariable Long id) {
-        if(!id.equals(expenseType.getId())) {
+        if (!id.equals(expenseType.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ExpenseType IDs don't match");
         }
-        if(!expenseTypeRepository.existsById(id)) {
+        if (!expenseTypeRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ExpenseType not found");
         }
         return expenseTypeRepository.save(expenseType);

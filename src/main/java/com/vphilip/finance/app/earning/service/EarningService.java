@@ -1,4 +1,3 @@
-// java
 package com.vphilip.finance.app.earning.service;
 
 import com.opencsv.bean.CsvToBean;
@@ -90,7 +89,7 @@ public class EarningService {
 
         // Normalize possible BOM/whitespace and stray characters
         String dateString = value.toString()
-                .replace("\uFEFF", "") // BOM
+                .replace("﻿", "") // BOM
                 .trim();
 
         if (dateString.isEmpty()) {

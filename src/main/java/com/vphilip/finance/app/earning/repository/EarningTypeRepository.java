@@ -1,16 +1,7 @@
 package com.vphilip.finance.app.earning.repository;
 
 import com.vphilip.finance.app.earning.model.EarningType;
-import org.springframework.data.jdbc.repository.query.Modifying;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EarningTypeRepository extends ListCrudRepository<EarningType, Long> {
-    @Modifying
-    @Query("""
-            INSERT INTO earning_type (id, label, description)
-            VALUES (:#{#earningType.id}, :#{#earningType.label}, :#{#earningType.description})
-            """)
-    void insert(@Param("earningType") EarningType earningType);
+public interface EarningTypeRepository extends JpaRepository<EarningType, Long> {
 }

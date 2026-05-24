@@ -40,19 +40,11 @@ public class AccountTypeBootstrap implements CommandLineRunner {
             AccountTypes allAccountTypes = objectMapper.readValue(inputStream, AccountTypes.class);
             log.info("Reading {} runs from JSON data and saving to in-memory collection.", allAccountTypes.accountTypes().size());
             for (AccountType accountType : allAccountTypes.accountTypes()) {
-                // if account type with this id does not exist, insert it
-                if (!accountTypeRepository.existsById(accountType.getId())) {
-                    accountTypeRepository.insert(accountType);
-                    log.info("Inserted account type with id {}", accountType.getId());
-                } else {
-                    // update existing account type
-                    accountTypeRepository.save(accountType);
-                    log.info("Updated account type with id {}", accountType.getId());
-                }
+                accountTypeRepository.save(accountType);
+                log.info("Saved account type with id {}", accountType.getId());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);
         }
     }
 }
-

@@ -1,11 +1,12 @@
 package com.vphilip.finance.app.transfer.controller;
 
-import com.vphilip.finance.app.transfer.dto.TransferDTO;
 import com.vphilip.finance.app.transfer.model.Transfer;
-import com.vphilip.finance.app.transfer.model.TransferCategory;
 import com.vphilip.finance.app.transfer.repository.TransferRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/transfers")
@@ -25,45 +26,42 @@ public class TransferController {
     @PostMapping
     public Transfer create(@RequestBody Transfer transfer) {
         Transfer newTransfer = new Transfer(
-            transfer.id(),
-            transfer.from_account_id(),
-            transfer.to_account_id(),
-            transfer.description(),
-            transfer.amount(),
-            transfer.transfer_category_id(),
-            transfer.transaction_date(),
-            java.time.LocalDateTime.now(), // Set created_at to current time
-            java.time.LocalDateTime.now()  // Set last_modified_at to current time
+            transfer.getId(),
+            transfer.getFrom_account_id(),
+            transfer.getTo_account_id(),
+            transfer.getDescription(),
+            transfer.getAmount(),
+            transfer.getTransfer_category_id(),
+            transfer.getTransaction_date(),
+            LocalDateTime.now(),
+            LocalDateTime.now()
         );
-
         return transferRepository.save(newTransfer);
     }
 
     @DeleteMapping("/{id}")
     public Transfer delete(@PathVariable Long id) {
-        Transfer existingTransfer = transferRepository.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+        Transfer existingTransfer = transferRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         transferRepository.delete(existingTransfer);
         return existingTransfer;
     }
 
     @PostMapping("/{id}")
     public Transfer update(@PathVariable Long id, @RequestBody Transfer transfer) {
-        if (!transferRepository.existsById(id)) {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
-        }
-
-        Transfer existingTransfer = transferRepository.findById(id).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND));
+        Transfer existingTransfer = transferRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Transfer updatedTransfer = new Transfer(
             id,
-            transfer.from_account_id(),
-            transfer.to_account_id(),
-            transfer.description(),
-            transfer.amount(),
-            transfer.transfer_category_id(),
-            transfer.transaction_date(),
-            existingTransfer.created_at(),  // Preserve original created_at
-            java.time.LocalDateTime.now()  // Update last_modified_at to current time
+            transfer.getFrom_account_id(),
+            transfer.getTo_account_id(),
+            transfer.getDescription(),
+            transfer.getAmount(),
+            transfer.getTransfer_category_id(),
+            transfer.getTransaction_date(),
+            existingTransfer.getCreated_at(),
+            LocalDateTime.now()
         );
         return transferRepository.save(updatedTransfer);
     }

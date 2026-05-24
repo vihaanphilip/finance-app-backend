@@ -26,7 +26,7 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    Account getAccountById(@PathVariable Integer id) {
+    Account getAccountById(@PathVariable Long id) {
         Optional<Account> account = accountRepository.findById(id);
         if (account.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -42,22 +42,22 @@ public class AccountController {
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Account updateAccount(@PathVariable Integer id, @RequestBody Account account) {
+    Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
         Account existing = accountRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         Account updated = new Account(
-                existing.id(),
-                account.name(),
-                account.description(),
-                account.account_type_id(),
-                account.starting_amount()
+                existing.getId(),
+                account.getName(),
+                account.getDescription(),
+                account.getAccount_type_id(),
+                account.getStarting_amount()
         );
         return accountRepository.save(updated);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Account deleteAccount(@PathVariable Integer id) {
+    Account deleteAccount(@PathVariable Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         accountRepository.deleteById(id);

@@ -1,9 +1,9 @@
 package com.vphilip.finance.app.expense.dto;
 
-public record ExpenseCategoryDTO(
-        Long id,
-        Long expense_type_id,
-        String label,
-        String description,
-        String expense_type_label
-) {}
+public interface ExpenseCategoryDTO {
+    Long getId();
+    Long getExpense_type_id();
+    String getLabel();
+    String getDescription();
+    String getExpense_type_label();
+}

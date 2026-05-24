@@ -26,10 +26,10 @@ public class JdbcClientAccountTypeRepository_OBSOLETE {
 
     public void create(AccountType accountType) {
         var updated = jdbcClient.sql("INSERT INTO account_type(id,label,description) values(?,?,?)")
-                .params(List.of(accountType.id(),accountType.label(), accountType.description()))
+                .params(List.of(accountType.getId(), accountType.getLabel(), accountType.getDescription()))
                 .update();
 
-        Assert.state(updated == 1, "Failed to create accountTYpe " + accountType.label());
+        Assert.state(updated == 1, "Failed to create accountTYpe " + accountType.getLabel());
     }
 
 

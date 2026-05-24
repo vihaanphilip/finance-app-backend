@@ -2,14 +2,14 @@ package com.vphilip.finance.app.expense.repository;
 
 import com.vphilip.finance.app.expense.dto.ExpenseDTO;
 import com.vphilip.finance.app.expense.model.Expense;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ExpenseRepository extends ListCrudRepository<Expense, Long> {
+public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
-    @Query("""
+    @Query(value = """
             SELECT e.id,
                    e.account_id,
                    a.name as account_label,
@@ -27,6 +27,6 @@ public interface ExpenseRepository extends ListCrudRepository<Expense, Long> {
             LEFT JOIN expense_category ec ON e.expense_category_id = ec.id
             LEFT JOIN expense_type et ON ec.expense_type_id = et.id
             ORDER BY e.id DESC
-            """)
+            """, nativeQuery = true)
     List<ExpenseDTO> findAllWithLabels();
 }

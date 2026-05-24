@@ -18,7 +18,7 @@ public class AccountTypeController {
     public AccountTypeController(AccountTypeRepository accountTypeRepository) {
         this.accountTypeRepository = accountTypeRepository;
     }
-    
+
     @GetMapping("")
     List<AccountType> getAccountTypes() {
         return accountTypeRepository.findAll();
@@ -26,17 +26,16 @@ public class AccountTypeController {
 
     @GetMapping("/{id}")
     AccountType getAccountTypeById(@PathVariable Long id) {
-        Optional<AccountType> AccountType = accountTypeRepository.findById(id);
-        if (AccountType.isEmpty()) {
+        Optional<AccountType> accountType = accountTypeRepository.findById(id);
+        if (accountType.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return AccountType.get();
+        return accountType.get();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     void createAccountType(@RequestBody AccountType accountType) {
-        accountTypeRepository.insert(accountType);
+        accountTypeRepository.save(accountType);
     }
-    
 }

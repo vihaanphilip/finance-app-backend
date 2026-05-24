@@ -41,13 +41,8 @@ public class ExpenseCategoryBootstrap implements CommandLineRunner {
             for (ExpenseCategory expenseCategory : allExpenseCategories.expenseCategories()) {
                 log.info("Processing expense category: id={}, label={}, description={}, expense_type_id={}",
                         expenseCategory.getId(), expenseCategory.getLabel(), expenseCategory.getDescription(), expenseCategory.getExpenseTypeId());
-                if (!expenseCategoryRepository.existsById(expenseCategory.getId())) {
-                    expenseCategoryRepository.insert(expenseCategory);
-                    log.info("Inserted expense category with id {}", expenseCategory.getId());
-                } else {
-                    expenseCategoryRepository.save(expenseCategory);
-                    log.info("Updated expense category with id {}", expenseCategory.getId());
-                }
+                expenseCategoryRepository.save(expenseCategory);
+                log.info("Saved expense category with id {}", expenseCategory.getId());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);

@@ -41,7 +41,7 @@ public class AccountBootstrap implements CommandLineRunner {
             log.info("Reading {} accounts from JSON data and saving to in-memory collection.", allAccounts.accounts().size());
             for (Account account : allAccounts.accounts()) {
                 accountRepository.save(account);
-                log.info("Saved account with name {}", account.name());
+                log.info("Saved account with name {}", account.getName());
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON data", e);

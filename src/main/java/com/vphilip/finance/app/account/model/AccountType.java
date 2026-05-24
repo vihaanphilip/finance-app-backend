@@ -1,24 +1,34 @@
 package com.vphilip.finance.app.account.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import jakarta.persistence.*;
 
-@Table("account_type")
-public record AccountType (
+@Entity
+@Table(name = "account_type")
+public class AccountType {
+
     @Id
-    Long id,
-    String label,
-    String description
-) {
-    public Long getId() {
-        return id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "label")
+    private String label;
+
+    @Column(name = "description")
+    private String description;
+
+    public AccountType() {}
+
+    public AccountType(Long id, String label, String description) {
+        this.id = id;
+        this.label = label;
+        this.description = description;
     }
 
-    public String getLabel() {
-        return label;
-    }
+    public Long getId() { return id; }
+    public String getLabel() { return label; }
+    public String getDescription() { return description; }
 
-    public String getDescription() {
-        return description;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setLabel(String label) { this.label = label; }
+    public void setDescription(String description) { this.description = description; }
 }

@@ -1,24 +1,25 @@
 package com.vphilip.finance.app.earning.repository;
 
+import com.vphilip.finance.app.earning.model.Earning;
 import com.vphilip.finance.app.earning.model.EarningCategorySummary;
-import com.vphilip.finance.app.earning.model.EarningSummary;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface EarningSummaryRepository extends ListCrudRepository<EarningSummary, Long> {
-    @Query("""
+public interface EarningSummaryRepository extends JpaRepository<Earning, Long> {
+
+    @Query(value = """
         SELECT COALESCE(SUM(e.amount), 0)
         FROM earning e
         WHERE EXTRACT(YEAR FROM e.created_at) = :year
           AND EXTRACT(MONTH FROM e.created_at) = :month
-        """)
+        """, nativeQuery = true)
     BigDecimal totalEarningsForMonth(@Param("year") int year, @Param("month") int month);
 
-    @Query("""
+    @Query(value = """
         SELECT
             MAKE_DATE(:year, :month, 1) AS month,
             ec.id   AS earning_category_id,
@@ -31,6 +32,6 @@ public interface EarningSummaryRepository extends ListCrudRepository<EarningSumm
          AND EXTRACT(MONTH FROM e.created_at) = :month
         GROUP BY ec.id, ec.label
         ORDER BY ec.label
-        """)
+        """, nativeQuery = true)
     List<EarningCategorySummary> totalEarningsForMonthByCategory(@Param("year") int year, @Param("month") int month);
 }

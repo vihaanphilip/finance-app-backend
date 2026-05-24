@@ -2,18 +2,19 @@ package com.vphilip.finance.app.transfer.repository;
 
 import com.vphilip.finance.app.transfer.dto.TransferDTO;
 import com.vphilip.finance.app.transfer.model.Transfer;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface TransferRepository extends ListCrudRepository<Transfer, Long> {
-    @Query("""
+public interface TransferRepository extends JpaRepository<Transfer, Long> {
+
+    @Query(value = """
         SELECT t.id,
                 t.from_account_id,
                 af.name as from_account_label,
                 t.to_account_id,
-                at.name as to_account_label,
+                at2.name as to_account_label,
                 t.description,
                 t.amount,
                 tc.transfer_type_id,
@@ -25,10 +26,10 @@ public interface TransferRepository extends ListCrudRepository<Transfer, Long> {
                 t.last_modified_at
         FROM transfer t
         LEFT JOIN account af ON af.id = t.from_account_id
-        LEFT JOIN account at ON at.id = t.to_account_id
+        LEFT JOIN account at2 ON at2.id = t.to_account_id
         LEFT JOIN transfer_category tc ON tc.id = t.transfer_category_id
         LEFT JOIN transfer_type tt ON tt.id = tc.transfer_type_id
         ORDER BY t.id DESC
-    """)
+    """, nativeQuery = true)
     List<TransferDTO> findAllWithLabels();
 }

@@ -35,13 +35,12 @@ public class EarningTypeController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     EarningType createEarningType(@RequestBody EarningType earningType) {
-        earningTypeRepository.insert(earningType);
-        return earningType;
+        return earningTypeRepository.save(earningType);
     }
 
     @PostMapping("/{id}")
     EarningType updateEarningType(@RequestBody EarningType earningType, @PathVariable Long id) {
-        if (!id.equals(earningType.id())) {
+        if (!id.equals(earningType.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in path must match ID in request body");
         }
         if (!earningTypeRepository.existsById(id)) {
@@ -60,5 +59,3 @@ public class EarningTypeController {
         return earningType.get();
     }
 }
-
-

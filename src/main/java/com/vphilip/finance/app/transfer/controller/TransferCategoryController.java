@@ -3,9 +3,11 @@ package com.vphilip.finance.app.transfer.controller;
 import com.vphilip.finance.app.transfer.dto.TransferCategoryDTO;
 import com.vphilip.finance.app.transfer.model.TransferCategory;
 import com.vphilip.finance.app.transfer.repository.TransferCategoryRepository;
-import jakarta.annotation.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,37 +20,36 @@ public class TransferCategoryController {
     }
 
     @GetMapping("")
-    public Object getTransferCategories() {
+    public List<TransferCategoryDTO> getTransferCategories() {
         return transferCategoryRepository.findAllWithType();
     }
 
-    @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    TransferCategory createTransferCategory(@RequestBody TransferCategory  transferCategory) {
-        transferCategoryRepository.insert(transferCategory);
-        return transferCategory;
+    TransferCategory createTransferCategory(@RequestBody TransferCategory transferCategory) {
+        return transferCategoryRepository.save(transferCategory);
     }
 
     @DeleteMapping("/{id}")
     TransferCategory deleteTransferCategory(@PathVariable Long id) {
         Optional<TransferCategory> transferCategory = transferCategoryRepository.findById(id);
-        if(transferCategory.isPresent()) {
+        if (transferCategory.isPresent()) {
             transferCategoryRepository.deleteById(id);
         } else {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return transferCategory.get();
     }
 
     @PostMapping("/{id}")
     TransferCategory updateTransferCategory(@PathVariable Long id, @RequestBody TransferCategory transferCategory) {
-        if(!id.equals(transferCategory.getId())) {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST);
+        if (!id.equals(transferCategory.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         if (transferCategoryRepository.findById(id).isPresent()) {
             return transferCategoryRepository.save(transferCategory);
-        } else  {
-            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 }
