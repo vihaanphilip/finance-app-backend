@@ -3,11 +3,14 @@ package com.vphilip.finance.app.earning.dto;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import com.vphilip.finance.app.earning.model.Earning;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
 public class EarningCsvDto {
     @CsvBindByName
     private Long id;
@@ -38,37 +41,6 @@ public class EarningCsvDto {
     @CsvBindByName(column = "last_modified_at")
     @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime last_modified_at;
-
-    // Default constructor
-    public EarningCsvDto() {}
-
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getAccount_id() { return account_id; }
-    public void setAccount_id(Long account_id) { this.account_id = account_id; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public BigDecimal getAmount() { return amount; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
-
-    public Long getEarning_type_id() { return earning_type_id; }
-    public void setEarning_type_id(Long earning_type_id) { this.earning_type_id = earning_type_id; }
-
-    public Long getEarning_category_id() { return earning_category_id; }
-    public void setEarning_category_id(Long earning_category_id) { this.earning_category_id = earning_category_id; }
-
-    public LocalDate getTransaction_date() { return transaction_date; }
-    public void setTransaction_date(LocalDate transaction_date) { this.transaction_date = transaction_date; }
-
-    public LocalDateTime getCreated_at() { return created_at; }
-    public void setCreated_at(LocalDateTime created_at) { this.created_at = created_at; }
-
-    public LocalDateTime getLast_modified_at() { return last_modified_at; }
-    public void setLast_modified_at(LocalDateTime last_modified_at) { this.last_modified_at = last_modified_at; }
 
     // Convert to Earning
     public Earning toEarning() {
