@@ -1,0 +1,26 @@
+# Supabase PostgreSQL Configuration
+# Get your connection details from: https://app.supabase.com/project/[your-project-id]/settings/database
+
+spring:
+  # Disable Docker Compose auto-start when using Supabase profile
+  docker:
+    compose:
+      enabled: false
+  # Session Pooler - IPv4 compatible, port 5432
+  datasource:
+    url: jdbc:postgresql://${SUPABASE_HOST}:${SUPABASE_PORT}/${SUPABASE_DATABASE}?sslmode=require
+    username: ${SUPABASE_USER}
+    password: ${SUPABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    # spring.sql.init.mode=always was used for schema.sql DDL init under Spring Data JDBC; now managed by Hibernate ddl-auto
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      idle-timeout: 300000
+
+# Disable bootstrap data seeding - Supabase DB manages its own data
+app:
+  bootstrap-data: false
+  bootstrap-transaction-data: false
+  bootstrap-expense-data: false
+  bootstrap-earnings-data: false

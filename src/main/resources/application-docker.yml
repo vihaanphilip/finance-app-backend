@@ -1,0 +1,15 @@
+# Docker Local PostgreSQL Configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/finance_db
+    username: vihaan
+    password: password123
+    driver-class-name: org.postgresql.Driver
+
+# Bootstrap data seeding for Docker profile
+app:
+  bootstrap-data: false
+  bootstrap-transaction-data: false
+  bootstrap-expense-data: false
+  bootstrap-earnings-data: false
+  bootstrap-test-runner: false
