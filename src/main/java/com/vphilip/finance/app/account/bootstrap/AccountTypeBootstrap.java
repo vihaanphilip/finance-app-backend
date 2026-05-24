@@ -7,18 +7,16 @@ import com.vphilip.finance.app.account.model.AccountTypes;
 import com.vphilip.finance.app.account.repository.AccountTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 @Component
+@ConditionalOnProperty(name = "app.bootstrap-data", havingValue = "true")
 public class AccountTypeBootstrap implements CommandLineRunner {
-
-    @Value("${app.bootstrap-data:false}")
-    private boolean bootstrapEnabled;
 
     private static final Logger log = LoggerFactory.getLogger(AccountTypeBootstrap.class);
     private final ObjectMapper objectMapper;
@@ -31,10 +29,6 @@ public class AccountTypeBootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!bootstrapEnabled) {
-            log.info("AccountTypeBootstrap is disabled. Skipping data loading.");
-            return;
-        }
         log.info("AccountTypeBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/account_types.json")) {
             AccountTypes allAccountTypes = objectMapper.readValue(inputStream, AccountTypes.class);

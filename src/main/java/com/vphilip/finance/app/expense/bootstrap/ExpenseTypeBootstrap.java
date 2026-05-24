@@ -7,17 +7,16 @@ import com.vphilip.finance.app.expense.model.ExpenseTypeList;
 import com.vphilip.finance.app.expense.repository.ExpenseTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 @Component
+@ConditionalOnProperty(name = "app.bootstrap-expense-data", havingValue = "true")
 public class ExpenseTypeBootstrap implements CommandLineRunner {
-    @Value("${app.bootstrap-expense-data:false}")
-    private boolean bootstrapEnabled;
 
     private static final Logger log = LoggerFactory.getLogger(ExpenseTypeBootstrap.class);
     private final ExpenseTypeRepository expenseTypeRepository;
@@ -30,10 +29,6 @@ public class ExpenseTypeBootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!bootstrapEnabled) {
-            log.info("ExpenseTypeBootstrap is disabled. Skipping data loading.");
-            return;
-        }
         log.info("ExpenseTypeBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/expense_types.json")) {
             ExpenseTypeList allExpenseTypes = objectMapper.readValue(inputStream, ExpenseTypeList.class);

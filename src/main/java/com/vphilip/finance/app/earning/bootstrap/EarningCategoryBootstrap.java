@@ -7,18 +7,16 @@ import com.vphilip.finance.app.earning.model.EarningCategoryList;
 import com.vphilip.finance.app.earning.repository.EarningCategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 @Component
+@ConditionalOnProperty(name = "app.bootstrap-earnings-data", havingValue = "true")
 public class EarningCategoryBootstrap implements CommandLineRunner {
-
-    @Value("${app.bootstrap-earnings-data:false}")
-    private boolean bootstrapEnabled;
 
     private static final Logger log = LoggerFactory.getLogger(EarningCategoryBootstrap.class);
     private final EarningCategoryRepository earningCategoryRepository;
@@ -31,10 +29,6 @@ public class EarningCategoryBootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!bootstrapEnabled) {
-            log.info("EarningCategoryBootstrap is disabled. Skipping data loading.");
-            return;
-        }
         log.info("EarningCategoryBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/earning_categories.json")) {
             EarningCategoryList allEarningCategories = objectMapper.readValue(inputStream, EarningCategoryList.class);

@@ -7,8 +7,8 @@ import com.vphilip.finance.app.earning.model.EarningList;
 import com.vphilip.finance.app.earning.repository.EarningRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,10 +16,8 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 
 @Component
+@ConditionalOnProperty(name = "app.bootstrap-earnings-data", havingValue = "true")
 public class EarningBootstrap implements CommandLineRunner {
-
-    @Value("${app.bootstrap-earnings-data:false}")
-    private boolean bootstrapEnabled;
 
     private static final Logger log = LoggerFactory.getLogger(EarningBootstrap.class);
     private final EarningRepository earningRepository;
@@ -32,10 +30,6 @@ public class EarningBootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!bootstrapEnabled) {
-            log.info("EarningBootstrap is disabled. Skipping data loading.");
-            return;
-        }
         log.info("EarningBootstrap is enabled. Loading data...");
         try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/earnings.json")) {
             EarningList allEarnings = objectMapper.readValue(inputStream, EarningList.class);
