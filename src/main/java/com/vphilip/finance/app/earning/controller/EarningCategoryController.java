@@ -36,7 +36,8 @@ public class EarningCategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     EarningCategory createEarningCategory(@RequestBody EarningCategory earningCategory) {
-        return earningCategoryRepository.save(earningCategory);
+        earningCategoryRepository.insert(earningCategory);
+        return earningCategory;
     }
 
     @PutMapping("/{id}")
