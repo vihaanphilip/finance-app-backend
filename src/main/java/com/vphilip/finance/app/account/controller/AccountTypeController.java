@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/accounttypes")
+@RequestMapping("/api/v1/accounttypes")
 public class AccountTypeController {
 
     private final AccountTypeRepository accountTypeRepository;
