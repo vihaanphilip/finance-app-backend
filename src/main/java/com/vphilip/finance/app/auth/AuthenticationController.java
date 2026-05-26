@@ -2,6 +2,7 @@ package com.vphilip.finance.app.auth;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+
+    @Value("${app.cookie.secure}")
+    private boolean cookieSecure;
+
+    @Value("${app.cookie.same-site}")
+    private String cookieSameSite;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -41,8 +48,8 @@ public class AuthenticationController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         ResponseCookie clearCookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
+                .secure(cookieSecure)
+                .sameSite(cookieSameSite)
                 .maxAge(0)
                 .path("/")
                 .build();
@@ -53,8 +60,8 @@ public class AuthenticationController {
     private void setJwtCookie(HttpServletResponse response, String token) {
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
+                .secure(cookieSecure)
+                .sameSite(cookieSameSite)
                 .maxAge(86400)
                 .path("/")
                 .build();
