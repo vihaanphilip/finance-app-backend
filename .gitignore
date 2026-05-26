@@ -37,6 +37,7 @@ postgres-data/
 
 # Ignore local info and agent config
 Info/
+.claude/
 .github/
 
 .env
