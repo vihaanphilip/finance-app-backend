@@ -92,10 +92,12 @@ public interface AccountSummaryRepository extends JpaRepository<Account, Long> {
             LEFT JOIN expenses_in_period   exip  ON exip.account_id = a.id
             LEFT JOIN transfers_in_period  tip   ON tip.account_id  = a.id
             LEFT JOIN transfers_out_period top_  ON top_.account_id = a.id
+            WHERE a.user_id = :userId
             ORDER BY a.id DESC
             """, nativeQuery = true)
     List<AccountSummaryDTO> findAccountSummaries(
             @Param("start_date") LocalDate startDate,
-            @Param("end_date") LocalDate endDate
+            @Param("end_date") LocalDate endDate,
+            @Param("userId") Integer userId
     );
 }

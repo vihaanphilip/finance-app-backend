@@ -2,11 +2,13 @@ package com.vphilip.finance.app.expense.controller;
 
 import com.vphilip.finance.app.expense.model.ExpenseCategory;
 import com.vphilip.finance.app.expense.repository.ExpenseCategoryRepository;
+import com.vphilip.finance.app.user.User;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/expensecategories")
@@ -18,50 +20,56 @@ public class ExpenseCategoryController {
     }
 
     @GetMapping("")
-    public Object getExpenseCategories() {
-        return expenseCategoryRepository.findAllWithType();
+    public Object getExpenseCategories(@AuthenticationPrincipal User user) {
+        return expenseCategoryRepository.findAllWithType(user.getId());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    ExpenseCategory createExpenseCategory(@RequestBody ExpenseCategory expenseCategory) {
+    ExpenseCategory createExpenseCategory(@RequestBody ExpenseCategory expenseCategory, @AuthenticationPrincipal User user) {
+        expenseCategory.setUser_id(user.getId());
         return expenseCategoryRepository.save(expenseCategory);
     }
 
     @PutMapping("/{id}")
-    public Object updateExpenseCategory(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory) {
-        if (!expenseCategoryRepository.existsById(id)) {
+    public Object updateExpenseCategory(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory, @AuthenticationPrincipal User user) {
+        ExpenseCategory existing = expenseCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!user.getId().equals(existing.getUser_id())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         ExpenseCategory updatedCategory = new ExpenseCategory(
                 id,
                 expenseCategory.getExpenseTypeId(),
                 expenseCategory.getLabel(),
-                expenseCategory.getDescription()
+                expenseCategory.getDescription(),
+                existing.getUser_id()
         );
         return expenseCategoryRepository.save(updatedCategory);
     }
 
     @DeleteMapping("/{id}")
-    ExpenseCategory deleteExpenseCategory(@PathVariable Long id) {
-        Optional<ExpenseCategory> expenseCategory = expenseCategoryRepository.findById(id);
-        if (expenseCategory.isPresent()) {
-            expenseCategoryRepository.deleteById(id);
-        } else {
+    ExpenseCategory deleteExpenseCategory(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        ExpenseCategory expenseCategory = expenseCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!user.getId().equals(expenseCategory.getUser_id())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return expenseCategory.get();
+        expenseCategoryRepository.deleteById(id);
+        return expenseCategory;
     }
 
     @PostMapping("/{id}")
-    ExpenseCategory updateExpenseCategoryPost(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory) {
+    ExpenseCategory updateExpenseCategoryPost(@PathVariable Long id, @RequestBody ExpenseCategory expenseCategory, @AuthenticationPrincipal User user) {
         if (!id.equals(expenseCategory.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        if (expenseCategoryRepository.existsById(id)) {
-            return expenseCategoryRepository.save(expenseCategory);
-        } else {
+        ExpenseCategory existing = expenseCategoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!user.getId().equals(existing.getUser_id())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        expenseCategory.setUser_id(existing.getUser_id());
+        return expenseCategoryRepository.save(expenseCategory);
     }
 }

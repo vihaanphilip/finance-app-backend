@@ -2,6 +2,8 @@ package com.vphilip.finance.app.summary.controller;
 
 import com.vphilip.finance.app.summary.dto.AccountSummaryDTO;
 import com.vphilip.finance.app.summary.repository.AccountSummaryRepository;
+import com.vphilip.finance.app.user.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +25,10 @@ public class SummaryController {
     @GetMapping("/accounts")
     public List<AccountSummaryDTO> getAccountSummaries(
             @RequestParam LocalDate start_date,
-            @RequestParam LocalDate end_date
+            @RequestParam LocalDate end_date,
+            @AuthenticationPrincipal User user
     ) {
-        return accountSummaryRepository.findAccountSummaries(start_date, end_date);
+        return accountSummaryRepository.findAccountSummaries(start_date, end_date, user.getId());
     }
 }
 

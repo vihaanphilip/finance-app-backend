@@ -30,7 +30,7 @@ public class EarningService {
         this.earningRepository = earningRepository;
     }
 
-    public List<Earning> processCSVFile(MultipartFile file) {
+    public List<Earning> processCSVFile(MultipartFile file, Integer userId) {
         if (file.isEmpty()) {
             throw new CsvProcessingException("Uploaded file is empty");
         }

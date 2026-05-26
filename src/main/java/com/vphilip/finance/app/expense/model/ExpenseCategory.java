@@ -24,5 +24,8 @@ public class ExpenseCategory {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "user_id")
+    private Integer user_id;
+
     public Long getExpenseTypeId() { return expense_type_id; }
 }

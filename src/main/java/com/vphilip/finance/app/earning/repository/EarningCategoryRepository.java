@@ -15,15 +15,17 @@ public interface EarningCategoryRepository extends JpaRepository<EarningCategory
         SELECT ec.id, ec.earning_type_id, ec.label, ec.description, et.label as earning_type_label
         FROM earning_category ec
         LEFT JOIN earning_type et ON ec.earning_type_id = et.id
+        WHERE ec.user_id = :userId
         ORDER BY ec.id
     """, nativeQuery = true)
-    List<EarningCategoryDTO> findAllWithType();
+    List<EarningCategoryDTO> findAllWithType(@Param("userId") Integer userId);
 
     @Query(value = """
         SELECT ec.id, ec.earning_type_id, ec.label, ec.description, et.label as earning_type_label
         FROM earning_category ec
         LEFT JOIN earning_type et ON ec.earning_type_id = et.id
         WHERE ec.id = :id
+          AND ec.user_id = :userId
     """, nativeQuery = true)
-    Optional<EarningCategoryDTO> findByIdWithType(@Param("id") Long id);
+    Optional<EarningCategoryDTO> findByIdWithType(@Param("id") Long id, @Param("userId") Integer userId);
 }

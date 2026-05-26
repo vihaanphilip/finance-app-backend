@@ -1,8 +1,9 @@
 package com.vphilip.finance.app.earning.controller;
 
 import com.vphilip.finance.app.earning.model.EarningSummary;
-import com.vphilip.finance.app.earning.service.EarningService;
 import com.vphilip.finance.app.earning.service.EarningSummaryService;
+import com.vphilip.finance.app.user.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,9 @@ public class EarningSummaryController {
 
     @GetMapping("")
     public EarningSummary getMonthlySummary(
-            @RequestParam LocalDate date
+            @RequestParam LocalDate date,
+            @AuthenticationPrincipal User user
     ) {
-        return earningSummaryService.getEarningsSummaryByMonth(date);
+        return earningSummaryService.getEarningsSummaryByMonth(date, user.getId());
     }
 }

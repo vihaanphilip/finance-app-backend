@@ -14,10 +14,12 @@ public interface EarningSummaryRepository extends JpaRepository<Earning, Long> {
     @Query(value = """
         SELECT COALESCE(SUM(e.amount), 0)
         FROM earning e
+        JOIN account a ON e.account_id = a.id
         WHERE EXTRACT(YEAR FROM e.created_at) = :year
           AND EXTRACT(MONTH FROM e.created_at) = :month
+          AND a.user_id = :userId
         """, nativeQuery = true)
-    BigDecimal totalEarningsForMonth(@Param("year") int year, @Param("month") int month);
+    BigDecimal totalEarningsForMonth(@Param("year") int year, @Param("month") int month, @Param("userId") Integer userId);
 
     @Query(value = """
         SELECT
@@ -30,8 +32,9 @@ public interface EarningSummaryRepository extends JpaRepository<Earning, Long> {
           ON e.earning_category_id = ec.id
          AND EXTRACT(YEAR FROM e.created_at) = :year
          AND EXTRACT(MONTH FROM e.created_at) = :month
+        WHERE ec.user_id = :userId
         GROUP BY ec.id, ec.label
         ORDER BY ec.label
         """, nativeQuery = true)
-    List<EarningCategorySummary> totalEarningsForMonthByCategory(@Param("year") int year, @Param("month") int month);
+    List<EarningCategorySummary> totalEarningsForMonthByCategory(@Param("year") int year, @Param("month") int month, @Param("userId") Integer userId);
 }

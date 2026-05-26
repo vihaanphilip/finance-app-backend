@@ -4,6 +4,7 @@ import com.vphilip.finance.app.earning.dto.EarningDTO;
 import com.vphilip.finance.app.earning.model.Earning;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -26,7 +27,8 @@ public interface EarningRepository extends JpaRepository<Earning, Long> {
             LEFT JOIN account a ON e.account_id = a.id
             LEFT JOIN earning_category ec ON e.earning_category_id = ec.id
             LEFT JOIN earning_type et ON et.id = ec.earning_type_id
+            WHERE a.user_id = :userId
             ORDER BY e.id DESC
             """, nativeQuery = true)
-    List<EarningDTO> findAllWithLabels();
+    List<EarningDTO> findAllWithLabels(@Param("userId") Integer userId);
 }

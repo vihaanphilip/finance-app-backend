@@ -108,3 +108,7 @@ There are no bootstrap runners for `transfer` or `summary`.
 ### CORS
 
 Configured in `WebCorsConfig.java` via `cors.allowed-origins` in `application.properties`. Default allows `localhost:3000`, `localhost:5173`, `localhost:8080`.
+
+## Notes / Conventions
+
+- **Strategy and plan docs** go in the project's `.claude/plans/` folder (e.g., `.claude/plans/data-segregation-plan.md`), not in `~/.claude/plans/`.

@@ -20,4 +20,7 @@ public class ExpenseType {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "user_id")
+    private Integer user_id;
 }

@@ -24,5 +24,8 @@ public class EarningCategory {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "user_id")
+    private Integer user_id;
+
     public Long getEarningTypeId() { return earning_type_id; }
 }

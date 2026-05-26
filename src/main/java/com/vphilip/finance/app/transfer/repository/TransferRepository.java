@@ -4,6 +4,7 @@ import com.vphilip.finance.app.transfer.dto.TransferDTO;
 import com.vphilip.finance.app.transfer.model.Transfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -29,7 +30,8 @@ public interface TransferRepository extends JpaRepository<Transfer, Long> {
         LEFT JOIN account at2 ON at2.id = t.to_account_id
         LEFT JOIN transfer_category tc ON tc.id = t.transfer_category_id
         LEFT JOIN transfer_type tt ON tt.id = tc.transfer_type_id
+        WHERE af.user_id = :userId
         ORDER BY t.id DESC
     """, nativeQuery = true)
-    List<TransferDTO> findAllWithLabels();
+    List<TransferDTO> findAllWithLabels(@Param("userId") Integer userId);
 }

@@ -29,14 +29,14 @@ public class EarningSummaryService {
         this.earningSummaryRepository = earningSummaryRepository;
     }
 
-    public EarningSummary getEarningsSummaryByMonth(LocalDate targetDate) {
+    public EarningSummary getEarningsSummaryByMonth(LocalDate targetDate, Integer userId) {
         if (targetDate == null) {
             throw new IllegalArgumentException("targetDate cannot be null");
         }
         int year = targetDate.getYear();
         int month = targetDate.getMonthValue();
-        BigDecimal total = earningSummaryRepository.totalEarningsForMonth(year, month);
-        List<EarningCategorySummary> categories = earningSummaryRepository.totalEarningsForMonthByCategory(year, month);
+        BigDecimal total = earningSummaryRepository.totalEarningsForMonth(year, month, userId);
+        List<EarningCategorySummary> categories = earningSummaryRepository.totalEarningsForMonthByCategory(year, month, userId);
         return new EarningSummary(targetDate, total, categories);
     }
 }

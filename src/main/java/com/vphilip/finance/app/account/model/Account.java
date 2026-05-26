@@ -27,4 +27,7 @@ public class Account {
 
     @Column(name = "starting_amount")
     private BigDecimal starting_amount;
+
+    @Column(name = "user_id")
+    private Integer user_id;
 }
