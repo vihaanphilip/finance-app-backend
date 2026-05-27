@@ -1,0 +1,20 @@
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+  <springProfile name="docker">
+    <logger name="com.vphilip.finance.app.earning"  level="DEBUG"/>
+    <logger name="com.vphilip.finance.app.expense"  level="DEBUG"/>
+    <logger name="com.vphilip.finance.app.transfer" level="DEBUG"/>
+    <logger name="com.vphilip.finance.app.account"  level="DEBUG"/>
+    <logger name="com.vphilip.finance.app.auth"     level="DEBUG"/>
+  </springProfile>
+
+  <springProfile name="supabase">
+    <logger name="com.vphilip.finance.app" level="INFO"/>
+  </springProfile>
+</configuration>

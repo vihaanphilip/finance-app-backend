@@ -13,3 +13,7 @@ app:
   bootstrap-expense-data: false
   bootstrap-earnings-data: false
   bootstrap-test-runner: false
+
+logging:
+  level:
+    com.vphilip.finance.app: DEBUG

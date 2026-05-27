@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vphilip.finance.app.account.model.Account;
 import com.vphilip.finance.app.account.model.Accounts;
 import com.vphilip.finance.app.account.repository.AccountRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -16,9 +15,9 @@ import java.io.InputStream;
 
 @Component
 @ConditionalOnProperty(name = "app.bootstrap-data", havingValue = "true")
+@Slf4j
 public class AccountBootstrap implements CommandLineRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(AccountBootstrap.class);
     private final ObjectMapper objectMapper;
     private final AccountRepository accountRepository;
 

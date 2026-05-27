@@ -10,6 +10,7 @@ import com.vphilip.finance.app.earning.repository.EarningCategoryRepository;
 import com.vphilip.finance.app.earning.repository.EarningRepository;
 import com.vphilip.finance.app.earning.service.EarningService;
 import com.vphilip.finance.app.user.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/earnings")
+@Slf4j
 public class EarningController {
 
     private final EarningRepository earningRepository;
@@ -56,11 +58,13 @@ public class EarningController {
 
     @GetMapping
     public List<EarningDTO> findAll(@AuthenticationPrincipal User user) {
+        log.debug("findAll earnings for user={}", user.getId());
         return earningRepository.findAllWithLabels(user.getId());
     }
 
     @GetMapping("/{id}")
     public Earning findById(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        log.debug("findById earning id={} user={}", id, user.getId());
         Earning earning = earningRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found"));
         verifyAccountOwnership(earning.getAccount_id(), user.getId());
@@ -70,6 +74,7 @@ public class EarningController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Earning create(@RequestBody Earning earning, @AuthenticationPrincipal User user) {
+        log.debug("create earning account={} user={}", earning.getAccount_id(), user.getId());
         verifyAccountOwnership(earning.getAccount_id(), user.getId());
         if (earning.getEarning_category_id() != null) {
             verifyCategoryOwnership(earning.getEarning_category_id(), user.getId());
@@ -90,6 +95,7 @@ public class EarningController {
 
     @PostMapping("/{id}")
     public Earning updateEarning(@RequestBody Earning earning, @PathVariable Long id, @AuthenticationPrincipal User user) {
+        log.debug("updateEarning id={} user={}", id, user.getId());
         if (!id.equals(earning.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in path must match ID in request body");
         }
@@ -116,6 +122,7 @@ public class EarningController {
 
     @PutMapping("/{id}")
     public void update(@RequestBody Earning earning, @PathVariable Long id, @AuthenticationPrincipal User user) {
+        log.debug("update earning id={} user={}", id, user.getId());
         Earning existingEarning = earningRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found"));
         verifyAccountOwnership(existingEarning.getAccount_id(), user.getId());
@@ -136,6 +143,7 @@ public class EarningController {
 
     @DeleteMapping("/{id}")
     public Earning delete(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        log.debug("delete earning id={} user={}", id, user.getId());
         Earning earning = earningRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Earning not found"));
         verifyAccountOwnership(earning.getAccount_id(), user.getId());
@@ -145,6 +153,7 @@ public class EarningController {
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Earning> uploadCsv(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) throws IOException {
+        log.debug("uploadCsv filename={} user={}", file.getOriginalFilename(), user.getId());
         return earningCsvService.processCSVFile(file, user.getId());
     }
 

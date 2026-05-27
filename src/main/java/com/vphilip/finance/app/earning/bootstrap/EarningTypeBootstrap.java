@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vphilip.finance.app.earning.model.EarningType;
 import com.vphilip.finance.app.earning.model.EarningTypeList;
 import com.vphilip.finance.app.earning.repository.EarningTypeRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -16,9 +15,9 @@ import java.io.InputStream;
 
 @Component
 @ConditionalOnProperty(name = "app.bootstrap-earnings-data", havingValue = "true")
+@Slf4j
 public class EarningTypeBootstrap implements CommandLineRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(EarningTypeBootstrap.class);
     private final EarningTypeRepository earningTypeRepository;
     private final ObjectMapper objectMapper;
 

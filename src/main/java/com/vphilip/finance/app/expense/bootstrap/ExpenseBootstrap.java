@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vphilip.finance.app.expense.model.Expense;
 import com.vphilip.finance.app.expense.model.ExpenseList;
 import com.vphilip.finance.app.expense.repository.ExpenseRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -17,9 +16,9 @@ import java.time.LocalDateTime;
 
 @Component
 @ConditionalOnProperty(name = "app.bootstrap-expense-data", havingValue = "true")
+@Slf4j
 public class ExpenseBootstrap implements CommandLineRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(ExpenseBootstrap.class);
     private final ExpenseRepository expenseRepository;
     private final ObjectMapper objectMapper;
 
