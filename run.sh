@@ -7,4 +7,3 @@ set +a
 
 echo "Starting with profile: ${SPRING_PROFILES_ACTIVE:-docker}"
 ./mvnw spring-boot:run
-
