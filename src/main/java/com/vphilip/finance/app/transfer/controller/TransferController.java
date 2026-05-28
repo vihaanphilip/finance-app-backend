@@ -66,7 +66,8 @@ public class TransferController {
             transfer.getTransfer_category_id(),
             transfer.getTransaction_date(),
             LocalDateTime.now(),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            transfer.getBudget_id()
         );
         return transferRepository.save(newTransfer);
     }
@@ -99,7 +100,8 @@ public class TransferController {
             transfer.getTransfer_category_id(),
             transfer.getTransaction_date(),
             existingTransfer.getCreated_at(),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            transfer.getBudget_id()
         );
         return transferRepository.save(updatedTransfer);
     }

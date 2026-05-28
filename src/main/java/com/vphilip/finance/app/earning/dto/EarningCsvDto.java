@@ -53,7 +53,8 @@ public class EarningCsvDto {
             earning_category_id,
             transaction_date,
             created_at,
-            last_modified_at
+            last_modified_at,
+            null
         );
     }
 }

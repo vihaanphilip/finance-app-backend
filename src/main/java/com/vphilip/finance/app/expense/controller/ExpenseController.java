@@ -64,7 +64,8 @@ public class ExpenseController {
             expense.getExpense_category_id(),
             expense.getTransaction_date(),
             LocalDateTime.now(),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            expense.getBudget_id()
         );
         return expenseRepository.save(newExpense);
     }
@@ -86,7 +87,8 @@ public class ExpenseController {
                 expense.getExpense_category_id(),
                 expense.getTransaction_date(),
                 existingExpense.getCreated_at(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                expense.getBudget_id()
         );
         return expenseRepository.save(updatedExpense);
     }

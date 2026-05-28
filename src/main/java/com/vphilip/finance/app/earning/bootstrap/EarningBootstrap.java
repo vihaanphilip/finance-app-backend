@@ -44,7 +44,8 @@ public class EarningBootstrap implements CommandLineRunner {
                         earning.getEarning_category_id(),
                         earning.getTransaction_date(),
                         now,
-                        now
+                        now,
+                        null
                 );
                 log.info("Processing earning: description={}, amount={}",
                         earningWithTimestamps.getDescription(), earningWithTimestamps.getAmount());

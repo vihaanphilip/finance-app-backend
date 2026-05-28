@@ -41,4 +41,7 @@ public class Transfer {
 
     @Column(name = "last_modified_at")
     private LocalDateTime last_modified_at;
+
+    @Column(name = "budget_id")
+    private Long budget_id;
 }

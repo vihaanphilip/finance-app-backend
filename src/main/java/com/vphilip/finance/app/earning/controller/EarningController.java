@@ -88,7 +88,8 @@ public class EarningController {
             earning.getEarning_category_id(),
             earning.getTransaction_date(),
             java.time.LocalDateTime.now(),
-            java.time.LocalDateTime.now()
+            java.time.LocalDateTime.now(),
+            earning.getBudget_id()
         );
         return earningRepository.save(newEarning);
     }
@@ -115,7 +116,8 @@ public class EarningController {
             earning.getEarning_category_id(),
             earning.getTransaction_date(),
             existingEarning.getCreated_at(),
-            java.time.LocalDateTime.now()
+            java.time.LocalDateTime.now(),
+            earning.getBudget_id()
         );
         return earningRepository.save(updatedEarning);
     }
@@ -136,7 +138,8 @@ public class EarningController {
             earning.getEarning_category_id(),
             earning.getTransaction_date(),
             existingEarning.getCreated_at(),
-            java.time.LocalDateTime.now()
+            java.time.LocalDateTime.now(),
+            earning.getBudget_id()
         );
         earningRepository.save(updatedEarning);
     }

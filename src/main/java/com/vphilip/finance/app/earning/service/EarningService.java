@@ -56,7 +56,8 @@ public class EarningService {
                                 dto.getEarning_category_id(),
                                 dto.getTransaction_date(),
                                 createdAt,
-                                now
+                                now,
+                                null
                         );
                     })
                     .toList();

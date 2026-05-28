@@ -43,7 +43,8 @@ public class ExpenseBootstrap implements CommandLineRunner {
                         expense.getExpense_category_id(),
                         expense.getTransaction_date(),
                         now,
-                        now
+                        now,
+                        null
                 );
                 log.info("Processing expense: description={}, amount={}, category_id={}",
                         expenseWithTimestamps.getDescription(),
