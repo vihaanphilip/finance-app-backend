@@ -37,8 +37,8 @@ public class AccountTypeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    void createAccountType(@RequestBody AccountType accountType, @AuthenticationPrincipal User user) {
+    AccountType createAccountType(@RequestBody AccountType accountType, @AuthenticationPrincipal User user) {
         accountType.setUser_id(user.getId());
-        accountTypeRepository.save(accountType);
+        return accountTypeRepository.save(accountType);
     }
 }
