@@ -2,6 +2,8 @@ package com.vphilip.finance.app.expense.controller;
 
 import com.vphilip.finance.app.account.model.Account;
 import com.vphilip.finance.app.account.repository.AccountRepository;
+import com.vphilip.finance.app.budget.model.Budget;
+import com.vphilip.finance.app.budget.repository.BudgetRepository;
 import com.vphilip.finance.app.expense.model.Expense;
 import com.vphilip.finance.app.expense.model.ExpenseCategory;
 import com.vphilip.finance.app.expense.repository.ExpenseCategoryRepository;
@@ -20,12 +22,15 @@ public class ExpenseController {
     private final ExpenseRepository expenseRepository;
     private final AccountRepository accountRepository;
     private final ExpenseCategoryRepository expenseCategoryRepository;
+    private final BudgetRepository budgetRepository;
 
     public ExpenseController(ExpenseRepository expenseRepository, AccountRepository accountRepository,
-                             ExpenseCategoryRepository expenseCategoryRepository) {
+                             ExpenseCategoryRepository expenseCategoryRepository,
+                             BudgetRepository budgetRepository) {
         this.expenseRepository = expenseRepository;
         this.accountRepository = accountRepository;
         this.expenseCategoryRepository = expenseCategoryRepository;
+        this.budgetRepository = budgetRepository;
     }
 
     private void verifyAccountOwnership(Long accountId, Integer userId) {
@@ -44,6 +49,14 @@ public class ExpenseController {
         }
     }
 
+    private void verifyBudgetOwnership(Long budgetId, Integer userId) {
+        Budget budget = budgetRepository.findById(budgetId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!userId.equals(budget.getUser_id())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping
     public Object findAll(@AuthenticationPrincipal User user) {
         return expenseRepository.findAllWithLabels(user.getId());
@@ -55,6 +68,9 @@ public class ExpenseController {
         verifyAccountOwnership(expense.getAccount_id(), user.getId());
         if (expense.getExpense_category_id() != null) {
             verifyCategoryOwnership(expense.getExpense_category_id(), user.getId());
+        }
+        if (expense.getBudget_id() != null) {
+            verifyBudgetOwnership(expense.getBudget_id(), user.getId());
         }
         Expense newExpense = new Expense(
             expense.getId(),
@@ -78,6 +94,9 @@ public class ExpenseController {
         verifyAccountOwnership(expense.getAccount_id(), user.getId());
         if (expense.getExpense_category_id() != null) {
             verifyCategoryOwnership(expense.getExpense_category_id(), user.getId());
+        }
+        if (expense.getBudget_id() != null) {
+            verifyBudgetOwnership(expense.getBudget_id(), user.getId());
         }
         Expense updatedExpense = new Expense(
                 id,

@@ -2,6 +2,8 @@ package com.vphilip.finance.app.earning.controller;
 
 import com.vphilip.finance.app.account.model.Account;
 import com.vphilip.finance.app.account.repository.AccountRepository;
+import com.vphilip.finance.app.budget.model.Budget;
+import com.vphilip.finance.app.budget.repository.BudgetRepository;
 import com.vphilip.finance.app.earning.dto.EarningDTO;
 import com.vphilip.finance.app.earning.exception.CsvProcessingException;
 import com.vphilip.finance.app.earning.model.Earning;
@@ -31,13 +33,16 @@ public class EarningController {
     private final EarningService earningCsvService;
     private final AccountRepository accountRepository;
     private final EarningCategoryRepository earningCategoryRepository;
+    private final BudgetRepository budgetRepository;
 
     public EarningController(EarningRepository earningRepository, EarningService earningCsvService,
-                             AccountRepository accountRepository, EarningCategoryRepository earningCategoryRepository) {
+                             AccountRepository accountRepository, EarningCategoryRepository earningCategoryRepository,
+                             BudgetRepository budgetRepository) {
         this.earningRepository = earningRepository;
         this.earningCsvService = earningCsvService;
         this.accountRepository = accountRepository;
         this.earningCategoryRepository = earningCategoryRepository;
+        this.budgetRepository = budgetRepository;
     }
 
     private void verifyAccountOwnership(Long accountId, Integer userId) {
@@ -52,6 +57,14 @@ public class EarningController {
         EarningCategory category = earningCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (!userId.equals(category.getUser_id())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    private void verifyBudgetOwnership(Long budgetId, Integer userId) {
+        Budget budget = budgetRepository.findById(budgetId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!userId.equals(budget.getUser_id())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
@@ -78,6 +91,9 @@ public class EarningController {
         verifyAccountOwnership(earning.getAccount_id(), user.getId());
         if (earning.getEarning_category_id() != null) {
             verifyCategoryOwnership(earning.getEarning_category_id(), user.getId());
+        }
+        if (earning.getBudget_id() != null) {
+            verifyBudgetOwnership(earning.getBudget_id(), user.getId());
         }
         Earning newEarning = new Earning(
             earning.getId(),
@@ -106,6 +122,9 @@ public class EarningController {
         verifyAccountOwnership(earning.getAccount_id(), user.getId());
         if (earning.getEarning_category_id() != null) {
             verifyCategoryOwnership(earning.getEarning_category_id(), user.getId());
+        }
+        if (earning.getBudget_id() != null) {
+            verifyBudgetOwnership(earning.getBudget_id(), user.getId());
         }
         Earning updatedEarning = new Earning(
             earning.getId(),
